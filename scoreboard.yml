@@ -1,0 +1,39 @@
+# SCOREBOARD FILE - Configure the look of the Scoreboard.
+#
+# Recommendations:
+# 1) Remember that there is a limit of 32 characters per line and 16 line.
+# 2) If you customize the scoreboard, use /reloadconfig.
+# 3) For customization:
+#   - %player% to show player's name.
+#   - %uuid% to show player's uuid.
+#   - %kills% to show player's kills.
+#   - %deaths% to show player's deaths.
+#   - %ks% to show player's kill streaks.
+#   - %bks% to show the best player's kill streaks.
+#   - %xp% to show the player's experience.
+#   - %money% to show the player's money.
+#   - %bounty% to show the player's bounty.
+#   - %online% to show the size of online players.
+#
+# Please contact Tarkod (the developer) on Spigot or on EvoGames if you have any problems.
+
+ScoreBoard:
+  General:
+    Title: '&r&b&lKIT-PVP'
+    Enabled: true
+  Lines:
+  - '&1'
+  - '&e&lStats'
+  - '&aNom: &f%player%'
+  - '&aKills: &f%kills%'
+  - '&aDeaths: &f%deaths%'
+  - '&aRatio K/D: &f%kd%'
+  - '&2'
+  - '&6&lNiveau'
+  - '&aExpériences: &f%xp%'
+  - '&aArgents: &f%money%'
+  - '&aBounty: &f%bounty%'
+  - '&3'
+  - '&c&lKill Streak'
+  - '&aActuel: &f%ks%'
+  - '&aMaximum: &f%bks%'
