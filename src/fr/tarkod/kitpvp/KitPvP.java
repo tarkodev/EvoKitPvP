@@ -57,6 +57,8 @@ public class KitPvP extends JavaPlugin {
 	private EventManager eventManager;
 	private BlockManager blockManager;
 	private FightManager fightManager;
+
+	private ItemLibrary itemLibrary;
 	//private Map<UUID, ScoreboardSign> boards = new HashMap<UUID, ScoreboardSign>();
 	
 	private ProfileSerializationManager profileSerializationManager;
@@ -87,6 +89,7 @@ public class KitPvP extends JavaPlugin {
 		eventManager = new EventManager(this);
 		fightManager = new FightManager(this);
 		dataManager = new DataManager(gson, getDataFolder(), this);
+		itemLibrary = new ItemLibrary(this);
 		loadListeners();
 		registerCommands();
 	}
@@ -124,7 +127,8 @@ public class KitPvP extends JavaPlugin {
 				new RemoveCommand(),
 				new TablistName(this),
 				new TablistHeaderFooter(),
-				new CancelDropKitItem()
+				new CancelDropKitItem(),
+				new PlayerRespawn(this)
 		).forEach(event -> getServer().getPluginManager().registerEvents(event, this));
 	}
 	
@@ -155,7 +159,8 @@ public class KitPvP extends JavaPlugin {
 				new TopCommand(this),
 				new InvseeCommand(this),
 				new PrestigeCmd(this),
-				new SoundCommand(this)
+				new SoundCommand(this),
+				new StatsCommand(this)
 		).forEach(this::registerCommand);
 	}
 	
@@ -197,5 +202,9 @@ public class KitPvP extends JavaPlugin {
 
 	public FightManager getFightManager() {
 		return fightManager;
+	}
+
+	public ItemLibrary getItemLibrary() {
+		return itemLibrary;
 	}
 }

@@ -39,8 +39,11 @@ public class LevelManager {
 
 		profile.setExperience(profile.getExperience() - howXpToLevelUp(profile.getLevel()));
 		profile.setLevel(profile.getLevel() + 1);
+		profile.setMoney(profile.getMoney() + 20);
 
 		Title.sendFullTitle(player, 10, 40, 10, ChatColor.AQUA + "LEVEL UP!", ChatColor.GRAY + "[" + (profile.getLevel() - 1) + "] -> [" + profile.getLevel() + "]");
+		player.sendMessage(ChatColor.GREEN + "+20$ (LEVEL UP)");
+		player.setHealth(player.getMaxHealth());
 		player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
 	}
 	

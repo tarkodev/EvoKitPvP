@@ -25,7 +25,7 @@ public class ScoreBoard {
 			PermissionUser permissionUser = PermissionsEx.getUser(profile.getPlayer());
 			String c = ChatColor.translateAlternateColorCodes('&' ,permissionUser.getPrefix());
 			ss.setLine(0, "§1");
-			//ss.setLine(1, ChatColor.GREEN + "" + ChatColor.BOLD + "Stats");
+			//ss.setLine(1, ChatColor.GREEN + "" + ChatColor.BOLD + "StatsCommand");
 			//ss.setLine(2, c + "Pseudo: " + ChatColor.WHITE + profile.getName());
 			ss.setLine(3, c + "Grade: " + ChatColor.WHITE + ChatColor.translateAlternateColorCodes('&', permissionUser.getOption("group_name")));
 			ss.setLine(4, c + "Kills: " + ChatColor.WHITE + profile.getKill());

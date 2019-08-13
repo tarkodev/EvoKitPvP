@@ -56,8 +56,8 @@ public class PayCmd extends Command {
 						} else {
 							playerProfile.setMoney(playerProfile.getMoney() - quantity);
 							receiverProfile.setMoney(receiverProfile.getMoney() + quantity);
-							player.sendMessage("Vous venez d'envoyer " + ChatColor.GREEN + quantity + ChatColor.WHITE + "€ à " + ChatColor.AQUA + receiver.getName() + ChatColor.WHITE + " !");
-							receiver.sendMessage("Vous venez de recevoir " + ChatColor.GREEN + quantity + ChatColor.WHITE + "€ de " + ChatColor.AQUA + player.getName() + ChatColor.WHITE + " !");
+							player.sendMessage("Vous venez d'envoyer " + ChatColor.GREEN + quantity + ChatColor.WHITE + "$ à " + ChatColor.AQUA + receiver.getName() + ChatColor.WHITE + " !");
+							receiver.sendMessage("Vous venez de recevoir " + ChatColor.GREEN + quantity + ChatColor.WHITE + "$ de " + ChatColor.AQUA + player.getName() + ChatColor.WHITE + " !");
 						}
 					} else {
 						player.sendMessage(ChatColor.RED + "Erreur: Vous n'avez pas les fonds nécessaire !");

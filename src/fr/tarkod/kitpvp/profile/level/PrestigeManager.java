@@ -40,6 +40,7 @@ public class PrestigeManager {
         profile.setPrestigeCoins(profile.getPrestigeCoins() + 100);
         profile.setLevel(0);
         profile.setBounty(0);
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "cc give virtual basic 1 " + profile.getName());
         Bukkit.getOnlinePlayers().forEach(player -> {
             Title.sendFullTitle(player, 40, 100, 40, ChatColor.GOLD + profile.getName(), getPrestigeColor() + "Prestige " + profile.getPrestige());
             player.playSound(player.getLocation(), Sound.WITHER_DEATH, 1, 1);

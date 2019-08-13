@@ -30,7 +30,7 @@ public class MoneyCmd extends Command {
 			double money = playerProfile.getMoney();
 			
 			if(args.length == 0) {
-				player.sendMessage(ChatColor.AQUA + "Vous possédez " + ChatColor.GREEN + money + "€");
+				player.sendMessage(ChatColor.AQUA + "Vous possédez " + ChatColor.GREEN + money + "$");
 			}
 		}
 		if(sender.hasPermission("kitpvp.admin")) {
@@ -48,8 +48,8 @@ public class MoneyCmd extends Command {
 						Profile receiverProfile = main.getDataManager().getProfileManager().get(receiver.getUniqueId());
 						int i = Integer.parseInt(c);
 						receiverProfile.setMoney(receiverProfile.getMoney() + i);
-						receiver.sendMessage(ChatColor.AQUA + "Vous venez de recevoir " + ChatColor.GREEN + i + "€");
-						sender.sendMessage(i + "€ " + "give to " + receiver.getName());
+						receiver.sendMessage(ChatColor.AQUA + "Vous venez de recevoir " + ChatColor.GREEN + i + "$");
+						sender.sendMessage(i + "$ " + "give to " + receiver.getName());
 						break;
 					default:break;
 				}

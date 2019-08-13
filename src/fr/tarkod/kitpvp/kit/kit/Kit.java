@@ -3,6 +3,7 @@ package fr.tarkod.kitpvp.kit.kit;
 import fr.tarkod.kitpvp.utils.InventoryUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import java.util.ArrayList;
@@ -61,8 +62,8 @@ public class Kit {
         List<KitPvPItem> kitPvPItems = new ArrayList<>();
         inventory.clear();
         itemMap.forEach((integer, kitPvPItem) -> inventory.setItem(integer, kitPvPItem.toItemStack()));
-        //itemMap.forEach((integer, kitPvPItem) -> kitPvPItems.add(kitPvPItem));
-        //kitPvPItems.forEach(item -> inventory.addItem(item.toItemStack()));
+        ItemStack air = new ItemStack(Material.AIR);
+        player.getEquipment().setArmorContents(new ItemStack[]{air, air, air, air});
         if(armor.getHelmet() != null) {
             player.getEquipment().setHelmet(armor.getHelmet().toItemStack());
         }

@@ -94,7 +94,7 @@ public class EntityDamageByEntity implements Listener {
 					}
 					
 					if(event.getDroppedMoney() > 0) {
-						sbKillerMessage.append(ChatColor.GOLD + " +" + event.getDroppedMoney() + "€");
+						sbKillerMessage.append(ChatColor.GOLD + " +" + event.getDroppedMoney() + "$");
 						killerProfile.setMoney(killerProfile.getMoney() + event.getDroppedMoney());
 					}
 					if(event.getDroppedExperience() > 0) {

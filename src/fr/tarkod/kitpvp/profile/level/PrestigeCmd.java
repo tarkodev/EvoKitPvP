@@ -25,6 +25,7 @@ public class PrestigeCmd extends Command {
             if(args.length == 0){
                 player.sendMessage(ChatColor.DARK_RED + "Il faut être level 100, avoir 1000$ et avoir un minimum de 10 killstreak depuis le début du serveur pour être prestige");
                 player.sendMessage(ChatColor.DARK_RED + "Être prestige va te rembourser tes kits, reset tes niveaux, et diviser par 3 ton argent.");
+                player.sendMessage(ChatColor.AQUA + "Par contre, tu reçois 100 prestiges coins qui permettra à acheter des objets boutique (bientôt) et une clé pour la EvoBox");
                 player.sendMessage(ChatColor.RED + "Fais /prestige confirm pour confirmer");
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1, 1);
             }
