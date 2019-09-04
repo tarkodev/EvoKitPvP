@@ -7,18 +7,13 @@ import fr.tarkod.kitpvp.kit.kit.Kit;
 import fr.tarkod.kitpvp.kit.kit.KitArmor;
 import fr.tarkod.kitpvp.kit.kit.KitPvPItem;
 import fr.tarkod.kitpvp.profile.Profile;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-
-import java.util.Comparator;
 
 public class KitCommand extends Command {
 

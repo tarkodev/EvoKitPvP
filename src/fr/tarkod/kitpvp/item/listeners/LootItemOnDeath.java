@@ -1,8 +1,9 @@
-package fr.tarkod.kitpvp.item;
+package fr.tarkod.kitpvp.item.listeners;
 
 import java.util.HashMap;
 import java.util.List;
 
+import fr.tarkod.kitpvp.item.ItemRarity;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

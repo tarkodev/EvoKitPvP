@@ -33,6 +33,7 @@ public class ProfileManager {
     public Profile get(UUID uuid){
         return get(uuid, true);
     }
+
     public Profile get(UUID uuid, boolean defaultLoad){
         File file = new File(folder, uuid + ".json");
 

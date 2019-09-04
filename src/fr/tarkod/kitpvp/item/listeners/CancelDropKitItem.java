@@ -1,5 +1,6 @@
-package fr.tarkod.kitpvp.item;
+package fr.tarkod.kitpvp.item.listeners;
 
+import fr.tarkod.kitpvp.item.ItemRarity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

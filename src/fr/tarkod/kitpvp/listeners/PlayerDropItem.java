@@ -6,8 +6,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
-import fr.tarkod.kitpvp.item.ItemRarity;
-
 public class PlayerDropItem implements Listener {
 	
 	@EventHandler
