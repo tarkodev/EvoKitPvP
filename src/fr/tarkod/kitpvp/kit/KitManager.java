@@ -10,6 +10,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.io.File;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -113,8 +114,13 @@ public class KitManager {
     public void setKit(Kit kit, Profile profile) {
         Player player = profile.getPlayer();
         if(!isLock(kit, profile)) {
-            kit.apply(player, main);
-            player.sendMessage(ChatColor.GREEN + "Kit appliqué !");
+            if(profile.getCooldownManager().canGet(kit.getName())) {
+                kit.apply(player, main);
+                profile.getCooldownManager().set(kit.getName(), Instant.now().getEpochSecond() + kit.getCooldown());
+                player.sendMessage(ChatColor.GREEN + "Kit appliqué !");
+            } else {
+                player.sendMessage(ChatColor.RED + "Ton kit est réutilisable dans " + profile.getCooldownManager().getTimeLeft(kit.getName()) + "s");
+            }
         } else {
             player.sendMessage(ChatColor.RED + "Tu n'as pas ce kit !");
         }

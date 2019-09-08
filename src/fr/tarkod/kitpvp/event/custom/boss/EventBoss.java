@@ -2,7 +2,7 @@ package fr.tarkod.kitpvp.event.custom.boss;
 
 import fr.tarkod.kitpvp.KitPvP;
 import fr.tarkod.kitpvp.event.Event;
-import fr.tarkod.kitpvp.item.loot.BlockLocation;
+import fr.tarkod.kitpvp.loot.BlockLocation;
 import fr.tarkod.kitpvp.profile.Profile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

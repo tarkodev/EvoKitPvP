@@ -19,7 +19,7 @@ import fr.tarkod.kitpvp.event.command.EventCommand;
 import fr.tarkod.kitpvp.item.itemrarity.command.ItemRarityCommand;
 import fr.tarkod.kitpvp.item.itemspecificity.command.ItemSpecificityCommand;
 import fr.tarkod.kitpvp.item.listeners.ItemListener;
-import fr.tarkod.kitpvp.item.loot.commands.LootCmd;
+import fr.tarkod.kitpvp.loot.commands.LootCmd;
 import fr.tarkod.kitpvp.kit.chest.KitChest;
 import fr.tarkod.kitpvp.kit.commands.KitCommand;
 import fr.tarkod.kitpvp.listeners.*;

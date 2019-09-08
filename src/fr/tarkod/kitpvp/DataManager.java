@@ -3,7 +3,7 @@ package fr.tarkod.kitpvp;
 import com.google.gson.Gson;
 import fr.tarkod.kitpvp.item.itemrarity.ItemRarityManager;
 import fr.tarkod.kitpvp.item.itemspecificity.ItemSpecificityManager;
-import fr.tarkod.kitpvp.item.loot.LootManager;
+import fr.tarkod.kitpvp.loot.LootManager;
 import fr.tarkod.kitpvp.kit.KitManager;
 import fr.tarkod.kitpvp.profile.serialization.ProfileManager;
 

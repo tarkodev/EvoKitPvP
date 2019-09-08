@@ -1,4 +1,4 @@
-package fr.tarkod.kitpvp.item.loot;
+package fr.tarkod.kitpvp.loot;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

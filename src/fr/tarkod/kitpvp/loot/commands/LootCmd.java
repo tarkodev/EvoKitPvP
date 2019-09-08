@@ -1,8 +1,8 @@
-package fr.tarkod.kitpvp.item.loot.commands;
+package fr.tarkod.kitpvp.loot.commands;
 
 import fr.tarkod.kitpvp.item.KitPvPItem;
-import fr.tarkod.kitpvp.item.loot.Loot;
-import fr.tarkod.kitpvp.item.loot.LootProfile;
+import fr.tarkod.kitpvp.loot.Loot;
+import fr.tarkod.kitpvp.loot.LootProfile;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.tarkod.kitpvp.KitPvP;
-import fr.tarkod.kitpvp.item.loot.BlockLocation;
+import fr.tarkod.kitpvp.loot.BlockLocation;
 import org.bukkit.inventory.ItemStack;
 
 public class LootCmd extends Command {

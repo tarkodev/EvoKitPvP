@@ -107,10 +107,10 @@ public class EntityDamageByEntity implements Listener {
 
 					killer.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 4*20, 0));
 					
-					if(killer.getHealth() + 6 > killer.getMaxHealth()) {
+					if(killer.getHealth() + 7 > killer.getMaxHealth()) {
 						killer.setHealth(killer.getMaxHealth());
 					} else {
-						killer.setHealth(killer.getHealth() + 6);
+						killer.setHealth(killer.getHealth() + 7);
 					}
 					
 					event.getKiller().sendMessage(sbKillerMessage.toString());
