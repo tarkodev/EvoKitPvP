@@ -28,8 +28,8 @@ public class EventGui {
 
     private void load(){
         EventManager eventManager = main.getEventManager();
-        for (int i = 0; i < eventManager.getRegistedEvents().size(); i++) {
-            Event event = eventManager.getRegistedEvents().get(i);
+        for (int i = 0; i < eventManager.getRegisteredEvents().size(); i++) {
+            Event event = eventManager.getRegisteredEvents().get(i);
             inventory.setItem(i, new EvoInvItem(new ItemBuilder(event.getMaterial())
                     .setName(ChatColor.GOLD + event.getName())
                     .setLore(ChatColor.AQUA + event.getDescription())

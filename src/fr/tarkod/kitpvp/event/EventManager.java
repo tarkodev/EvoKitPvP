@@ -42,7 +42,7 @@ public class EventManager {
         main.getServer().getPluginManager().registerEvents(event, main);
     }
 
-    public List<Event> getRegistedEvents(){
+    public List<Event> getRegisteredEvents(){
         return events;
     }
 

@@ -24,6 +24,7 @@ public class EventRabbit extends Event implements Listener {
 
     @Override
     public void onEnable() {
+
     }
 
     @Override
