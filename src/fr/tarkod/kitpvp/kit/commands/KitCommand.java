@@ -30,11 +30,11 @@ public class KitCommand extends Command {
             Profile playerProfile = main.getDataManager().getProfileManager().get(player.getUniqueId());
             KitManager kitManager = main.getDataManager().getKitManager();
             if(args.length == 0){
-                //if(!playerProfile.getFight().isFighting()) {
-                    main.getDataManager().getProfileManager().get(player.getUniqueId()).getKitSelection().open();
-                /*} else {
-                    player.sendMessage(ChatColor.RED + "Tu ne peux pas faire ceci car tu es en combat pendant encore " + ChatColor.GRAY + playerProfile.getFight().getTimeLeft() + ChatColor.RED + " secondes !");
-                }*/
+                if(kitManager.isEnable()) {
+                    kitManager.openKitSelectionGui(playerProfile);
+                } else {
+                    player.sendMessage(ChatColor.RED + "L'ouverture du menu de kit est désactivé ! (Event ou Bug)");
+                }
             }
             if (args.length == 1) {
                 String a = args[0];

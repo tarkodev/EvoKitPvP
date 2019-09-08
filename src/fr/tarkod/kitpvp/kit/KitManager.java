@@ -22,11 +22,14 @@ public class KitManager {
     private File kitFile;
     private KitPvP main;
 
+    private boolean status;
+
     public KitManager(Gson gson, File kitFile, KitPvP main) {
         this.gson = gson;
         this.main = main;
         this.kits = new ArrayList<>();
         this.kitFile = kitFile;
+        this.status = true;
         this.loadKits();
     }
 
@@ -62,6 +65,10 @@ public class KitManager {
                         this.gson.toJson(kit)
                 )
         );
+    }
+
+    public void openKitSelectionGui(Profile profile){
+        profile.getKitSelection().open();
     }
 
     public void lock(Kit kit, Profile profile) {
@@ -132,5 +139,13 @@ public class KitManager {
 
     public List<Kit> getKits() {
         return kits;
+    }
+
+    public boolean isEnable() {
+        return status;
+    }
+
+    public void setEnable(boolean status) {
+        this.status = status;
     }
 }

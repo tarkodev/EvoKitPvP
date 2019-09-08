@@ -41,13 +41,13 @@ public class ConfirmKitGui {
             load();
         }));
         inventory.setItem(29, new EvoInvItem(new ItemBuilder(Material.INK_SACK).setDurability((short) 1).setName(ChatColor.RED + "Retour").toItemStack(), event -> {
-            profile.getKitSelection().open();
+            kitManager.openKitSelectionGui(profile);
         }));
         inventory.setItem(33, new EvoInvItem(new ItemBuilder(Material.INK_SACK).setDurability((short) 10).setName(ChatColor.GREEN + "Confirmer").toItemStack(), event -> {
             if ((profile.getMoney() - kit.getMoneyCost()) >= 0) {
                 profile.setMoney(profile.getMoney() - kit.getMoneyCost());
                 kitManager.unlockForce(kit, profile);
-                profile.getKitSelection().open();
+                kitManager.openKitSelectionGui(profile);
             }
         }));
     }
