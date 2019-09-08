@@ -2,14 +2,12 @@ package fr.tarkod.kitpvp.event.custom.boss;
 
 import fr.tarkod.kitpvp.KitPvP;
 import fr.tarkod.kitpvp.event.Event;
-import fr.tarkod.kitpvp.listeners.EntityDamageByEntity;
-import fr.tarkod.kitpvp.loot.BlockLocation;
+import fr.tarkod.kitpvp.item.loot.BlockLocation;
 import fr.tarkod.kitpvp.profile.Profile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftZombie;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -17,7 +15,6 @@ import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
 
 import java.util.Random;
 
@@ -36,7 +33,7 @@ public class EventBoss extends Event implements Listener {
 
     @Override
     public void onEnable() {
-        BlockLocation blockLocation = getMain().getLootManager().getLootProfile().getLootLocationList().get(new Random().nextInt(getMain().getLootManager().getLootProfile().getLootLocationList().size()));
+        BlockLocation blockLocation = getMain().getDataManager().getLootManager().getLootProfile().getLootLocationList().get(new Random().nextInt(getMain().getDataManager().getLootManager().getLootProfile().getLootLocationList().size()));
         Location location = blockLocation.getLocation("world");
         boss = (Zombie) Bukkit.getWorld("world").spawnEntity(location, EntityType.ZOMBIE);
         boss.setMaxHealth(1000);

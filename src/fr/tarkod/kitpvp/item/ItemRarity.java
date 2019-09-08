@@ -14,7 +14,7 @@ import fr.tarkod.kitpvp.utils.ItemBuilder;
 
 public enum ItemRarity {
 	
-	KIT("KIT ITEM", ChatColor.GRAY),
+	/*KIT("KIT ITEM", ChatColor.GRAY),
 	COMMON("COMMON", ChatColor.WHITE),
 	UNCOMMON("UNCOMMON", ChatColor.GREEN),
 	RARE("RARE", ChatColor.BLUE),
@@ -141,5 +141,5 @@ public enum ItemRarity {
 			itemList.put(rarity, rarityList);
 		}
 		return itemList;
-	}
+	}*/
 }

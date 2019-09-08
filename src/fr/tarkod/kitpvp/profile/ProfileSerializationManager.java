@@ -2,8 +2,7 @@ package fr.tarkod.kitpvp.profile;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import fr.tarkod.kitpvp.loot.LootProfile;
+import fr.tarkod.kitpvp.item.loot.LootProfile;
 
 public class ProfileSerializationManager {
 	

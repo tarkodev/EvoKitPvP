@@ -18,14 +18,14 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 
-public class KitGui {
+public class KitGuiTest {
 
     private EvoInventory inventory;
     private KitPvP main;
     private KitManager kitManager;
     private Profile profile;
 
-    public KitGui(Profile profile) {
+    public KitGuiTest(Profile profile) {
         this.profile = profile;
         main = KitPvP.getInstance();
 
@@ -52,7 +52,7 @@ public class KitGui {
             }
             inventory.setItem(kit.getSlot(), new EvoInvItem(itemStack, event -> {
                 if (event.getClick() == ClickType.LEFT) {
-                    if (kitManager.isLock(kit, profile)) {
+                    if(kitManager.isLock(kit, profile)) {
                         kitManager.unlock(kit, profile);
                     } else {
                         kitManager.setKit(kit, profile);
@@ -106,3 +106,4 @@ public class KitGui {
         return item.toItemStack();
     }
 }
+

@@ -1,8 +1,7 @@
 package fr.tarkod.kitpvp.block;
 
 import fr.tarkod.kitpvp.KitPvP;
-import fr.tarkod.kitpvp.loot.BlockLocation;
-import org.bukkit.Bukkit;
+import fr.tarkod.kitpvp.item.loot.BlockLocation;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

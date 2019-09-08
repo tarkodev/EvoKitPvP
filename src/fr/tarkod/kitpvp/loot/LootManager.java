@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import fr.tarkod.kitpvp.item.loot.BlockLocation;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 
@@ -16,13 +17,13 @@ import fr.tarkod.kitpvp.utils.ItemBuilder;
 
 public class LootManager {
 	
-	private List<Loot> lootList;
+	/*private List<Loot> lootList;
 	private KitPvP main;
 	private LootProfile lootProfile;
 	private File file;
 	
 	public LootManager(KitPvP main) {
-		this.lootList = new ArrayList<Loot>();
+		this.lootList = new ArrayList<>();
 		this.main = main;
 		file = new File(main.getDataFolder(), "loot" + ".json");
 		defaultLoad();
@@ -109,5 +110,5 @@ public class LootManager {
 
 	public LootProfile getLootProfile() {
 		return lootProfile;
-	}
+	}*/
 }

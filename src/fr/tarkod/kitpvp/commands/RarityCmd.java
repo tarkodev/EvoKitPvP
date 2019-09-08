@@ -22,7 +22,7 @@ public class RarityCmd extends Command {
 	
 	@Override
 	public boolean execute(CommandSender sender, String label, String[] args) {
-		if(sender instanceof Player) {
+		/*if(sender instanceof Player) {
 			Player player = (Player) sender;
 			ItemStack item = player.getItemInHand();
 			if(item == null) {
@@ -56,7 +56,7 @@ public class RarityCmd extends Command {
 					}
 				}
 			}
-		}
+		}*/
 		return false;
 	}
 }

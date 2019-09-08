@@ -13,8 +13,8 @@ public class ItemRarity {
 
     public ItemRarity(String id) {
         this.ID = id;
-        this.name = "Default Name ^^";
-        this.prefix = "&6TRO BO";
+        this.name = "Default Name";
+        this.prefix = "&6";
         this.lootChance = 100;
     }
 
@@ -24,6 +24,10 @@ public class ItemRarity {
 
     public void setID(String ID) {
         this.ID = ID;
+    }
+
+    public String getNameWithPrefix() {
+        return getPrefix() + getName();
     }
 
     public String getName() {

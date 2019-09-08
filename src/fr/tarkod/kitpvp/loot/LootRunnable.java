@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.logging.Level;
 
+import fr.tarkod.kitpvp.item.loot.Loot;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -24,7 +25,7 @@ public class LootRunnable extends BukkitRunnable {
 		if(tick == 60*5) {
 			tick = 0;
 			KitPvP main = KitPvP.getInstance();
-			LootManager lm = main.getLootManager();
+			/*LootManager lm = main.getLootManager();
 			LootProfile lp = lm.getLootProfile();
 			List<Location> locList = lp.getLocationList();
 			if(locList.size() > 0) {
@@ -33,7 +34,7 @@ public class LootRunnable extends BukkitRunnable {
 				lm.getLootList().add(loot);
 			} else {
 				Bukkit.getConsoleSender().sendMessage("Please add a lot location.");
-			}
+			}*/
 		}
 	}
 }

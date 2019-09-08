@@ -4,9 +4,12 @@ import com.google.gson.Gson;
 import fr.tarkod.kitpvp.KitPvP;
 import fr.tarkod.kitpvp.kit.kit.Kit;
 import fr.tarkod.kitpvp.profile.Profile;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.io.File;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -65,13 +68,56 @@ public class KitManager {
     }
 
     public void unlock(Kit kit, Profile profile) {
-        if(!(profile.getUnlockedKit().contains(kit.getName()))){
+        Player player = profile.getPlayer();
+        for (int j = 0; j < kit.getPermissionList().size(); j++) {
+            String perm = kit.getPermissionList().get(0);
+            if (!player.hasPermission(perm)) {
+                player.sendMessage(ChatColor.RED + "Tu ne peux pas acheter ce kit car tu n'as pas la permission " + ChatColor.GOLD + perm);
+                return;
+            }
+        }
+        if(!isLock(kit, profile)){
+            player.sendMessage(ChatColor.RED + "Erreur: Tu as déjà le kit !");
+            return;
+        }
+        if ((profile.getLevel() - kit.getLevelCost()) <= 0) {
+            player.sendMessage(ChatColor.RED + "Erreur: Tu n'as pas le niveau requis pour acheter ceci.");
+            player.playSound(player.getLocation(), Sound.ANVIL_LAND, 1, 1);
+            return;
+        }
+        if (!((profile.getMoney() - kit.getMoneyCost()) >= 0)) {
+            player.sendMessage(ChatColor.RED + "Erreur: Tu n'as pas assez d'argent pour acheter ceci.");
+            player.playSound(player.getLocation(), Sound.ANVIL_LAND, 1, 1);
+            return;
+        }
+        unlockForce(kit, profile);
+        profile.setMoney(profile.getMoney() - kit.getMoneyCost());
+        player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "Kit Débloqué !");
+        player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
+    }
+
+    public void unlockForce(Kit kit, Profile profile) {
+        if(!(profile.getUnlockedKit().contains(kit.getName()))) {
             profile.getUnlockedKit().add(kit.getName());
         }
     }
 
     public boolean isLock(Kit kit, Profile profile) {
         return !profile.getUnlockedKit().contains(kit.getName());
+    }
+
+    public void setKit(Kit kit, Profile profile) {
+        Player player = profile.getPlayer();
+        if(!isLock(kit, profile)) {
+            kit.apply(player, main);
+            player.sendMessage(ChatColor.GREEN + "Kit appliqué !");
+        } else {
+            player.sendMessage(ChatColor.RED + "Tu n'as pas ce kit !");
+        }
+    }
+
+    public void setKitForce(Kit kit, Profile profile){
+        kit.apply(profile.getPlayer(), main);
     }
 
     public List<Kit> getKits() {

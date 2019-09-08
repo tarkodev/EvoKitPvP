@@ -30,19 +30,19 @@ public class ViewKitGui {
 
     public void load(){
         inventory.clear();
-        kit.getItemMap().forEach((integer, kitPvPItem) -> inventory.setItem(integer, new EvoInvItem(kitPvPItem.toItemStack(), event -> event.setCancelled(true))));
+        kit.getItemMap().forEach((integer, kitPvPItem) -> inventory.setItem(integer, new EvoInvItem(kitPvPItem.toItemStack(main), event -> event.setCancelled(true))));
         KitArmor kitArmor = kit.getArmor();
         if(kitArmor.getHelmet() != null) {
-            inventory.setItem(9 * 4, new EvoInvItem(kitArmor.getHelmet().toItemStack(), e -> e.setCancelled(true)));
+            inventory.setItem(9 * 4, new EvoInvItem(kitArmor.getHelmet().toItemStack(main), e -> e.setCancelled(true)));
         }
         if(kitArmor.getChestplate() != null) {
-            inventory.setItem(9 * 4 + 1, new EvoInvItem(kitArmor.getChestplate().toItemStack(), e -> e.setCancelled(true)));
+            inventory.setItem(9 * 4 + 1, new EvoInvItem(kitArmor.getChestplate().toItemStack(main), e -> e.setCancelled(true)));
         }
         if(kitArmor.getLeggings() != null) {
-            inventory.setItem(9 * 4 + 2, new EvoInvItem(kitArmor.getLeggings().toItemStack(), e -> e.setCancelled(true)));
+            inventory.setItem(9 * 4 + 2, new EvoInvItem(kitArmor.getLeggings().toItemStack(main), e -> e.setCancelled(true)));
         }
         if(kitArmor.getBoots() != null) {
-            inventory.setItem(9 * 4 + 3, new EvoInvItem(kitArmor.getBoots().toItemStack(), e -> e.setCancelled(true)));
+            inventory.setItem(9 * 4 + 3, new EvoInvItem(kitArmor.getBoots().toItemStack(main), e -> e.setCancelled(true)));
         }
         inventory.setItem(9*4 + 8, new EvoInvItem(new ItemBuilder(Material.GOLD_NUGGET).setName(ChatColor.GOLD + "Cooldown: " + kit.getCooldown() + "s").toItemStack(), e -> e.setCancelled(true)));
     }

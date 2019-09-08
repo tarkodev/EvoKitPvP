@@ -1,5 +1,8 @@
-package fr.tarkod.kitpvp.commands;
+package fr.tarkod.kitpvp.item.loot.commands;
 
+import fr.tarkod.kitpvp.item.KitPvPItem;
+import fr.tarkod.kitpvp.item.loot.Loot;
+import fr.tarkod.kitpvp.item.loot.LootProfile;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -7,9 +10,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.tarkod.kitpvp.KitPvP;
-import fr.tarkod.kitpvp.loot.Loot;
-import fr.tarkod.kitpvp.loot.BlockLocation;
-import fr.tarkod.kitpvp.loot.LootProfile;
+import fr.tarkod.kitpvp.item.loot.BlockLocation;
+import org.bukkit.inventory.ItemStack;
 
 public class LootCmd extends Command {
 
@@ -28,19 +30,18 @@ public class LootCmd extends Command {
 
 	@Override
 	public boolean execute(CommandSender sender, String str, String[] args) {
-		LootProfile lp = main.getLootManager().getLootProfile();
+		LootProfile lp = main.getDataManager().getLootManager().getLootProfile();
 		if(sender instanceof Player) {
 			Player player = (Player) sender;
 			if(player.hasPermission("kitpvp.loot")) {
 				Location loc = player.getLocation();
 				if (args.length == 0) {
-					Loot loot = new Loot(loc);
+					Loot loot = new Loot(loc, main);
 					loot.spawn(10);
-					main.getLootManager().getLootList().add(loot);
 				}
 				if (args.length == 1) {
 					if (args[0].equalsIgnoreCase("save")) {
-						main.getLootManager().saveFile();
+						main.getDataManager().getLootManager().saveFile();
 						player.sendMessage("File saved");
 					}
 					if (args[0].equalsIgnoreCase("add")) {
@@ -54,6 +55,15 @@ public class LootCmd extends Command {
 							sb.append("\n" + ChatColor.AQUA + loot.getX() + ", " + loot.getY() + ", " + loot.getZ());
 						}
 						player.sendMessage(sb.toString());
+					}
+					if (args[0].equalsIgnoreCase("additem")) {
+						ItemStack itemStack = player.getItemInHand();
+						if(main.getDataManager().getItemSpecificityManager().hasItemSpecificity(itemStack)) {
+							lp.getListItem().add(new KitPvPItem(player.getItemInHand(), main));
+							player.sendMessage("Rajouté");
+						} else {
+							player.sendMessage(ChatColor.RED + "Pas de rareté :/");
+						}
 					}
 				}
 				if (args.length == 2) {
