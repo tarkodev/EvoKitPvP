@@ -27,6 +27,10 @@ public class ItemRarityCommand extends Command {
             ItemRarityManager itemRarityManager = main.getDataManager().getItemRarityManager();
             ItemSpecificityManager itemSpecificityManager = main.getDataManager().getItemSpecificityManager();
 
+            if(!player.hasPermission("item.itemrarity")) {
+                return false;
+            }
+
             if(args.length == 1){
                 String a = args[0];
                 switch (a){

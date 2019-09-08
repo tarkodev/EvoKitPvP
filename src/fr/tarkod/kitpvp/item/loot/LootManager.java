@@ -1,7 +1,6 @@
 package fr.tarkod.kitpvp.item.loot;
 
 import fr.tarkod.kitpvp.KitPvP;
-import fr.tarkod.kitpvp.loot.LootRunnable;
 import fr.tarkod.kitpvp.profile.ProfileSerializationManager;
 import fr.tarkod.kitpvp.utils.FileUtils;
 
@@ -22,7 +21,6 @@ public class LootManager {
         this.main = main;
         file = new File(main.getDataFolder(), "loot" + ".json");
         defaultLoad();
-        new LootRunnable().runTaskTimer(main, 0, 20);
     }
 
     private void defaultLoad() {

@@ -2,6 +2,7 @@ package fr.tarkod.kitpvp.kit;
 
 import com.google.gson.Gson;
 import fr.tarkod.kitpvp.KitPvP;
+import fr.tarkod.kitpvp.kit.gui.ConfirmKitGui;
 import fr.tarkod.kitpvp.kit.kit.Kit;
 import fr.tarkod.kitpvp.profile.Profile;
 import org.bukkit.ChatColor;
@@ -9,7 +10,6 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.io.File;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -67,6 +67,10 @@ public class KitManager {
         profile.getUnlockedKit().remove(kit.getName());
     }
 
+    public void unlockConfirmGui(Kit kit, Profile profile) {
+        new ConfirmKitGui(kit, profile, main).open();
+    }
+
     public void unlock(Kit kit, Profile profile) {
         Player player = profile.getPlayer();
         for (int j = 0; j < kit.getPermissionList().size(); j++) {
@@ -90,15 +94,15 @@ public class KitManager {
             player.playSound(player.getLocation(), Sound.ANVIL_LAND, 1, 1);
             return;
         }
-        unlockForce(kit, profile);
-        profile.setMoney(profile.getMoney() - kit.getMoneyCost());
-        player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "Kit Débloqué !");
-        player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
+        unlockConfirmGui(kit, profile);
     }
 
     public void unlockForce(Kit kit, Profile profile) {
         if(!(profile.getUnlockedKit().contains(kit.getName()))) {
+            Player player = profile.getPlayer();
             profile.getUnlockedKit().add(kit.getName());
+            player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "Kit Débloqué !");
+            player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
         }
     }
 

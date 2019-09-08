@@ -1,7 +1,6 @@
 package fr.tarkod.kitpvp.kit.commands;
 
 import fr.tarkod.kitpvp.KitPvP;
-import fr.tarkod.kitpvp.item.ItemRarity;
 import fr.tarkod.kitpvp.kit.KitManager;
 import fr.tarkod.kitpvp.kit.kit.Kit;
 import fr.tarkod.kitpvp.kit.kit.KitArmor;
@@ -32,7 +31,7 @@ public class KitCommand extends Command {
             KitManager kitManager = main.getDataManager().getKitManager();
             if(args.length == 0){
                 //if(!playerProfile.getFight().isFighting()) {
-                    main.getDataManager().getProfileManager().get(player.getUniqueId()).getInventory().open();
+                    main.getDataManager().getProfileManager().get(player.getUniqueId()).getKitSelection().open();
                 /*} else {
                     player.sendMessage(ChatColor.RED + "Tu ne peux pas faire ceci car tu es en combat pendant encore " + ChatColor.GRAY + playerProfile.getFight().getTimeLeft() + ChatColor.RED + " secondes !");
                 }*/

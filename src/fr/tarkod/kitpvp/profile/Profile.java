@@ -42,13 +42,15 @@ public class Profile {
 	private double prestigeCoins;
 	private int prestige;
 	private transient PrestigeManager prestigeManager;
-	
+
+	private transient KitPvP main;
+
 	private transient KitGui ki;
 	private transient ScoreboardSign ss;
 	private transient LevelManager lm;
 	private transient Fight fight;
 
-	public Profile(UUID uuid) {
+	public Profile(UUID uuid, KitPvP main) {
 		this.kill = 0;
 		this.death = 0;
 		this.killStreak = 0;
@@ -59,14 +61,15 @@ public class Profile {
 		this.bounty = 0;
 		this.uuid = uuid;
 		this.unlockedKit = Arrays.asList("Guerrier");
-		defaultLoad();
+		defaultLoad(main);
 	}
 
-	public void defaultLoad(){
-		defaultLoad(true, true, true);
+	public void defaultLoad(KitPvP main) {
+		defaultLoad(true, true, true, main);
 	}
 
-	public void defaultLoad(boolean scoreBoard, boolean cooldown, boolean kitgui) {
+	public void defaultLoad(boolean scoreBoard, boolean cooldown, boolean kitgui, KitPvP main) {
+		this.main = main;
 		if(cooldown) {
 			if (cooldownManager == null) {
 				this.cooldownManager = new CooldownManager(this);
@@ -74,7 +77,7 @@ public class Profile {
 			cooldownManager.defaultLoad(this);
 		}
 		if(kitgui) {
-			this.ki = new KitGui(this);
+			this.ki = new KitGui(this, main);
 		}
 		if(Bukkit.getPlayer(uuid) != null){
 			name = Bukkit.getPlayer(uuid).getName();
@@ -176,7 +179,7 @@ public class Profile {
 		updateScoreBoard();
 	}
 	
-	public KitGui getInventory() {
+	public KitGui getKitSelection() {
 		return ki;
 	}
 	
@@ -278,5 +281,9 @@ public class Profile {
 
 	public PrestigeManager getPrestigeManager() {
 		return prestigeManager;
+	}
+
+	public KitPvP getMain() {
+		return main;
 	}
 }

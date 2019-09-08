@@ -39,7 +39,6 @@ import fr.tarkod.kitpvp.bounty.BountyCheck;
 import fr.tarkod.kitpvp.killstreak.KSCheck;
 import fr.tarkod.kitpvp.message.PlayerChat;
 import fr.tarkod.kitpvp.listeners.custom.MakeEventWork;
-import fr.tarkod.kitpvp.loot.LootManager;
 import fr.tarkod.kitpvp.profile.ProfileSerializationManager;
 import fr.tarkod.kitpvp.utils.welcome.PlayerJoinLeft;
 import fr.tarkod.kitpvp.utils.welcome.WelcomeCmd;

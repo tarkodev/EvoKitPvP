@@ -33,6 +33,11 @@ public class ItemSpecificityCommand extends Command {
 
             ItemRarityManager itemRarityManager = main.getDataManager().getItemRarityManager();
             ItemSpecificityManager itemSpecificityManager = main.getDataManager().getItemSpecificityManager();
+
+            if(!player.hasPermission("item.itemspecificity")) {
+                return false;
+            }
+
             if(args.length == 0){
                 EvoInventory evoInventory = new EvoInventory("Personnalisation ", 9, main);
                 evoInventory.setItem(0, new EvoInvItem(new ItemBuilder(Material.BLAZE_POWDER).setName("lootOnDeath").toItemStack(), event -> {

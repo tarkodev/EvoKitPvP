@@ -119,7 +119,7 @@ public enum ItemRarity {
 	}
 	
 	public static HashMap<ItemRarity, List<ItemStack>> inventoryChecker(Player player) {
-		Inventory inv = player.getInventory();
+		Inventory inv = player.getKitSelection();
 		List<ItemStack> invContents = new ArrayList<ItemStack>(Arrays.asList(inv.getContents()));
 		for(ItemStack item : player.getEquipment().getArmorContents()) {
 			if(item != null) {

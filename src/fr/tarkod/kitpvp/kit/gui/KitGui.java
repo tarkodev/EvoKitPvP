@@ -25,11 +25,11 @@ public class KitGui {
     private KitManager kitManager;
     private Profile profile;
 
-    public KitGui(Profile profile) {
+    public KitGui(Profile profile, KitPvP main) {
         this.profile = profile;
-        main = KitPvP.getInstance();
+        this.main = main;
 
-        inventory = new EvoInventory("Kit Selection", 9 * 3, main);
+        inventory = new EvoInventory("Sélection des kits", 9 * 3, main);
 
         kitManager = main.getDataManager().getKitManager();
         load();
@@ -69,20 +69,12 @@ public class KitGui {
         ItemBuilder item = new ItemBuilder(kit.getMaterial())
                 .setName(ChatColor.GREEN + kit.getName())
                 .addLoreLine(ChatColor.GRAY + kit.getDescription());
-
-        /*if(kit.getSkill() != null) {
-            for(String str : kit.getSkill().keySet()) {
-                item.addLoreLine(ChatColor.AQUA + str + ":", ChatColor.AQUA + "- " + kit.getSkill().get(str));
-            }
-        }
-        */
         if (kit.getMoneyCost() >= 0) {
             item.addLoreLine(ChatColor.GREEN + "Débloqué !");
         }
         if (!profile.getCooldownManager().canGet(kit.getName())) {
             item.addLoreLine(ChatColor.RED + "Tu peux réutiliser ce kit dans " + profile.getCooldownManager().getTimeLeft(kit.getName()) + "s");
         }
-
         return item.toItemStack();
     }
 

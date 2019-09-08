@@ -55,7 +55,7 @@ public class ItemListener implements Listener {
         }
     }
 
-    @EventHandler
+    /*@EventHandler
     public void whenCurrentItemInventoryMove(InventoryClickEvent e) {
         ItemStack itemStack = e.getCurrentItem();
         ItemSpecificityManager itemSpecificityManager = main.getDataManager().getItemSpecificityManager();
@@ -66,7 +66,7 @@ public class ItemListener implements Listener {
 
         ItemSpecificity itemSpecificity = itemSpecificityManager.getItemSpecificity(itemStack);
 
-        if(e.getInventory().equals(e.getClickedInventory())) {
+        if(e.getKitSelection().equals(e.getClickedInventory())) {
             if (!itemSpecificity.isLootWhenDrop()) e.setCancelled(true);
         }
     }
@@ -82,8 +82,8 @@ public class ItemListener implements Listener {
 
         ItemSpecificity itemSpecificity = itemSpecificityManager.getItemSpecificity(itemStack);
 
-        if(e.getInventory().equals(e.getClickedInventory())) {
+        if(e.getKitSelection().equals(e.getClickedInventory())) {
             if (!itemSpecificity.isLootWhenDrop()) e.setCancelled(true);
         }
-    }
+    }*/
 }
