@@ -40,18 +40,9 @@ public class EventManager {
                 new EventSpeedFight("SpeedEvent", "Tout le monde reçoit Speed III", Material.SUGAR, 120, main),
                 new EventRabbit("LAPIN", "Une queue commence à pousser derrière toi et MAIS TU PEUX SAUTER HAUT", Material.RABBIT_FOOT, 120, main),
                 new EventBoss("BOSS", "Le 1er qui le tue gagne 1000$, bonne chance !", Material.ROTTEN_FLESH, 120, main),
-<<<<<<< HEAD
-                new EventPvPBox("PvPBox", "Qui sera le dernier ? (Le gagnant gagne 1000$)", Material.IRON_SWORD, 10, main)
-        ).forEach(this::registerEvent);
-    }
-
-    public void registerEvent(Event event){
-        events.add(event);
-=======
                 new EventPvPBox("PvPBox", "Qui sera le dernier ? (Le gagnant gagne 1000$)", Material.IRON_SWORD, 10, main),
                 new EventSoulPotion("Potion d'âme", "Chaque kill vous donnera un niveau d'un effet de potion aléatoire !", Material.POTION, 5*60, main)
         ));
->>>>>>> e1d8667eb15692e6b15799bbaaa0aff4db8a9c2d
     }
 
     public List<Event> getRegisteredEvents() {
@@ -90,10 +81,6 @@ public class EventManager {
         event.run();
     }
 
-<<<<<<< HEAD
-    public void stopEvent() {
-        if(eventLaunched != null && eventLaunched.isEnable()) {
-=======
     private void loadRunnable() {
         this.bukkitRunnable = new BukkitRunnable() {
 
@@ -119,7 +106,6 @@ public class EventManager {
     public void stopEvent() {
         if (eventLaunched != null) {
             // stop event
->>>>>>> e1d8667eb15692e6b15799bbaaa0aff4db8a9c2d
             eventLaunched.stop();
             bukkitRunnable.cancel();
 

@@ -24,7 +24,6 @@ public class EventSpeedFight extends Event implements Listener {
 
     @Override
     public void onEnable() {
-
     }
 
     @Override
