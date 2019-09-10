@@ -1,0 +1,61 @@
+package fr.tarkod.kitpvp.event.custom.soulpotion;
+
+import fr.tarkod.kitpvp.KitPvP;
+import fr.tarkod.kitpvp.event.Event;
+import fr.tarkod.kitpvp.listeners.custom.EGPlayerDeathByEntityEvent;
+import fr.tarkod.kitpvp.listeners.custom.EGPlayerRespawnEvent;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.potion.PotionEffectType;
+
+import java.util.*;
+
+public class EventSoulPotion extends Event {
+
+    private Map<UUID, PlayerPotionEffectsInformations> playersEffects = new HashMap<>();
+
+    public EventSoulPotion(String name, String description, Material material, int maxTime, KitPvP main) {
+        super(name, description, material, maxTime, main);
+    }
+
+    @EventHandler
+    public void onDeathByPlayer(EGPlayerDeathByEntityEvent event) {
+        if (!(event.getKiller() instanceof Player)) return;
+
+        Player killer = (Player) event.getKiller();
+        UUID killerUUID = killer.getUniqueId();
+
+        if (!playersEffects.containsKey(killerUUID)) {
+            playersEffects.put(killerUUID, new PlayerPotionEffectsInformations());
+        }
+
+        Random rand = new Random();
+        PotionEffectType type = PVPImpactPotionEffectType.values()[rand.nextInt(PVPImpactPotionEffectType.values().length)].getPotionEffectType();
+
+        killer.sendMessage(ChatColor.GOLD + "Vous avez gagné un niveau de l'effet de potion " + ChatColor.LIGHT_PURPLE + type.getName() + ".");
+
+        playersEffects.get(killerUUID).addEffect(type);
+        playersEffects.get(killerUUID).setEffectsOnPlayer(killer);
+    }
+
+    @EventHandler
+    public void onRespawn(EGPlayerRespawnEvent event) {
+        Player player = event.getPlayer();
+
+    }
+
+    @Override
+    public void everySecond() {}
+
+    @Override
+    public void onEnable() {}
+
+    @Override
+    public void onDisable() {
+        playersEffects.keySet().forEach(uuid -> Bukkit.getPlayer(uuid).getActivePotionEffects().clear());
+        playersEffects.clear();
+    }
+}

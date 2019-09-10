@@ -13,12 +13,11 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.Random;
 
-public class EventBoss extends Event implements Listener {
+public class EventBoss extends Event {
 
     private Zombie boss;
 
@@ -45,20 +44,18 @@ public class EventBoss extends Event implements Listener {
 
     @EventHandler
     public void onEntityDeath(EntityDamageByEntityEvent event){
-        if(isEnable()) {
-            if (event.getEntity().getEntityId() == boss.getEntityId()) {
-                Entity killer = event.getDamager();
-                if (boss.getHealth() - event.getFinalDamage() <= 0) {
-                    Bukkit.broadcastMessage(ChatColor.AQUA + "Bravo à " + ChatColor.AQUA + killer.getName() + ChatColor.AQUA + " pour avoir tué le boss !");
-                    if (killer instanceof Player) {
-                        Player player = ((Player) killer).getPlayer();
-                        int moneyWin = 1000;
-                        Profile profile = getMain().getDataManager().getProfileManager().get(player.getUniqueId());
-                        profile.setMoney(profile.getMoney() + moneyWin);
-                        Bukkit.broadcastMessage(ChatColor.GOLD + "Il gagne " + ChatColor.GREEN + moneyWin + "€");
-                    }
-                    stop();
+        if (event.getEntity().getEntityId() == boss.getEntityId()) {
+            Entity killer = event.getDamager();
+            if (boss.getHealth() - event.getFinalDamage() <= 0) {
+                Bukkit.broadcastMessage(ChatColor.AQUA + "Bravo à " + ChatColor.AQUA + killer.getName() + ChatColor.AQUA + " pour avoir tué le boss !");
+                if (killer instanceof Player) {
+                    Player player = ((Player) killer).getPlayer();
+                    int moneyWin = 1000;
+                    Profile profile = getMain().getDataManager().getProfileManager().get(player.getUniqueId());
+                    profile.setMoney(profile.getMoney() + moneyWin);
+                    Bukkit.broadcastMessage(ChatColor.GOLD + "Il gagne " + ChatColor.GREEN + moneyWin + "€");
                 }
+                stop();
             }
         }
     }
