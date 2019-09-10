@@ -41,12 +41,6 @@ public class EventSoulPotion extends Event {
         playersEffects.get(killerUUID).setEffectsOnPlayer(killer);
     }
 
-    @EventHandler
-    public void onRespawn(EGPlayerRespawnEvent event) {
-        Player player = event.getPlayer();
-
-    }
-
     @Override
     public void everySecond() {}
 
