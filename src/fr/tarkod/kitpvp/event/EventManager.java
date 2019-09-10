@@ -39,7 +39,6 @@ public class EventManager {
 
     public void registerEvent(Event event){
         events.add(event);
-        main.getServer().getPluginManager().registerEvents(event, main);
     }
 
     public List<Event> getRegistedEvents(){
@@ -66,7 +65,7 @@ public class EventManager {
         event.run();
     }
 
-    public void stopEvent(){
+    public void stopEvent() {
         if(eventLaunched != null && eventLaunched.isEnable()) {
             eventLaunched.stop();
         }

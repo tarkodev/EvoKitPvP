@@ -4,6 +4,7 @@ import fr.tarkod.kitpvp.KitPvP;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -58,6 +59,7 @@ public abstract class Event implements Listener {
 
     public void run(){
         if(!isEnable()) {
+            main.getServer().getPluginManager().registerEvents(this, main);
             status = true;
             loadRunnable();
             bukkitRunnable.runTaskTimer(main, 0, 20);
@@ -66,6 +68,7 @@ public abstract class Event implements Listener {
 
     public void stop(){
         if(isEnable()){
+            HandlerList.unregisterAll(this);
             disable();
         }
     }

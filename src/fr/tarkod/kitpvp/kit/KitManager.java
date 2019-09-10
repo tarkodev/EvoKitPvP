@@ -125,6 +125,7 @@ public class KitManager {
                 kit.apply(player, main);
                 profile.getCooldownManager().set(kit.getName(), Instant.now().getEpochSecond() + kit.getCooldown());
                 player.sendMessage(ChatColor.GREEN + "Kit appliqué !");
+                player.closeInventory();
             } else {
                 player.sendMessage(ChatColor.RED + "Ton kit est réutilisable dans " + profile.getCooldownManager().getTimeLeft(kit.getName()) + "s");
             }

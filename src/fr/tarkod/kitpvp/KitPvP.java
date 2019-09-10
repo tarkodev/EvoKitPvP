@@ -158,7 +158,8 @@ public class KitPvP extends JavaPlugin {
 				new SoundCommand(this),
 				new StatsCommand(this),
 				new ItemRarityCommand(this),
-				new ItemSpecificityCommand(this)
+				new ItemSpecificityCommand(this),
+				new TphereCommand()
 		).forEach(this::registerCommand);
 	}
 	
