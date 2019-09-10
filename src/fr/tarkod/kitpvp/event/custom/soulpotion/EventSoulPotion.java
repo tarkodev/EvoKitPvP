@@ -12,6 +12,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class EventSoulPotion extends Event {
 
@@ -49,7 +51,20 @@ public class EventSoulPotion extends Event {
 
     @Override
     public void onDisable() {
-        playersEffects.keySet().forEach(uuid -> Bukkit.getPlayer(uuid).getActivePotionEffects().clear());
+        List<PotionEffectType> pvpEffect = Stream.of(PVPImpactPotionEffectType.values()).map(PVPImpactPotionEffectType::getPotionEffectType).collect(Collectors.toList());
+
+        playersEffects.keySet().forEach(uuid -> {
+            Player player = Bukkit.getPlayer(uuid);
+
+            player.getActivePotionEffects().forEach(potionEffect -> {
+                PotionEffectType type = potionEffect.getType();
+
+                if (pvpEffect.contains(type)) {
+                    player.removePotionEffect(type);
+                }
+            });
+        });
+
         playersEffects.clear();
     }
 }

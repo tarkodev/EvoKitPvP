@@ -26,9 +26,7 @@ public class EventBoss extends Event {
     }
 
     @Override
-    public void everySecond() {
-
-    }
+    public void everySecond() {}
 
     @Override
     public void onEnable() {

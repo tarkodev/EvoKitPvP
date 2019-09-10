@@ -9,10 +9,8 @@ public enum PVPImpactPotionEffectType {
     JUMP, // neutre
     REGENERATION, // positif
     DAMAGE_RESISTANCE, // positif
-    FIRE_RESISTANCE, // positif
     WEAKNESS, // négatif
-    POISON, // négatif
-    WITHER; // négatif
+    POISON; // négatif
 
     public PotionEffectType getPotionEffectType() {
         return PotionEffectType.getByName(this.toString());
