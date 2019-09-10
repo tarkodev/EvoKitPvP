@@ -13,12 +13,11 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.Random;
 
-public class EventBoss extends Event implements Listener {
+public class EventBoss extends Event {
 
     private Zombie boss;
 
@@ -27,9 +26,7 @@ public class EventBoss extends Event implements Listener {
     }
 
     @Override
-    public void everySecond() {
-
-    }
+    public void everySecond() {}
 
     @Override
     public void onEnable() {

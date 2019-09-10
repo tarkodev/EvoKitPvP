@@ -6,7 +6,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public abstract class Event implements Listener {
 
@@ -17,8 +16,6 @@ public abstract class Event implements Listener {
     private Material material;
 
     private int maxTime;
-    private boolean status;
-    private BukkitRunnable bukkitRunnable;
 
     abstract public void everySecond();
     abstract public void onEnable();
@@ -30,9 +27,9 @@ public abstract class Event implements Listener {
         this.description = description;
         this.material = material;
         this.maxTime = maxTime;
-        loadRunnable();
     }
 
+<<<<<<< HEAD
     private void loadRunnable(){
         this.bukkitRunnable = new BukkitRunnable(){
 
@@ -74,18 +71,19 @@ public abstract class Event implements Listener {
     }
 
     private void enable(){
+=======
+    public void run() {
+>>>>>>> e1d8667eb15692e6b15799bbaaa0aff4db8a9c2d
         Bukkit.broadcastMessage(
                 ChatColor.GOLD + "[EVENT] " + ChatColor.AQUA + "L'event " + name + " commence" + "\n" +
-                ChatColor.AQUA + getDescription()
+                        ChatColor.AQUA + getDescription()
         );
-        status = true;
+
         onEnable();
     }
 
-    private void disable(){
+    public void stop() {
         Bukkit.broadcastMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.AQUA + "L'event " + name + " est terminé");
-        status = false;
-        bukkitRunnable.cancel();
         onDisable();
     }
 
@@ -103,10 +101,6 @@ public abstract class Event implements Listener {
 
     public int getMaxTime() {
         return maxTime;
-    }
-
-    public boolean isEnable() {
-        return status;
     }
 
     public EventManager getEventManager(){
