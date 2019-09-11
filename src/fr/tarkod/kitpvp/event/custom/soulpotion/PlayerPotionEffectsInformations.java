@@ -10,14 +10,52 @@ import java.util.Map;
 public class PlayerPotionEffectsInformations {
 
     private Map<PotionEffectType, Integer> effectsLevels = new HashMap<>();
+    private Map<PotionEffectType, TimeAndAmplifier> temporaryEffects = new HashMap<>();
 
-    /**
-     * @param player
-     * Clear all active effect and apply all effects stored for an infinite times
-     */
+    public void addTemporaryEffects(PotionEffect potionEffect) {
+        temporaryEffects.put(potionEffect.getType(), new TimeAndAmplifier(potionEffect.getAmplifier(), potionEffect.getDuration()));
+    }
+
+    public void decrementAndCheckTemporaryEffects(Player player) {
+        for (Map.Entry<PotionEffectType, TimeAndAmplifier> informations : new HashMap<>(temporaryEffects).entrySet()) {
+            if (temporaryEffects.get(informations.getKey()).getTimeInSecond() <= 1) {
+                temporaryEffects.remove(informations.getKey());
+                setEffectsOnPlayer(player, informations.getKey());
+            }
+
+            informations.getValue().minusOneSecond();
+        }
+    }
+
+    public void removeTemporaryEffects(PotionEffectType type) {
+        temporaryEffects.remove(type);
+    }
+
+    public void cleanTemporaryEffects() {
+        temporaryEffects.clear();
+    }
+
     public void setEffectsOnPlayer(Player player) {
-        player.getActivePotionEffects().clear();
-        effectsLevels.forEach((type, level) -> player.addPotionEffect(new PotionEffect(type, Integer.MAX_VALUE, level-1)));
+        effectsLevels.keySet().forEach(type -> setEffectsOnPlayer(player, type));
+    }
+
+    public void setEffectsOnPlayer(Player player, PotionEffectType type) {
+        Integer time = null;
+        Integer amplifier = null;
+
+        if (effectsLevels.containsKey(type)) {
+            time = Integer.MAX_VALUE;
+            amplifier = effectsLevels.get(type)-1;
+        }
+
+        if (temporaryEffects.containsKey(type)) {
+            time = temporaryEffects.get(type).getTimeInTick();
+            amplifier += temporaryEffects.get(type).getAmplifier();
+        }
+
+        if (time != null) {
+            player.addPotionEffect(new PotionEffect(type, time, amplifier));
+        }
     }
 
     public int getEffectLevel(PotionEffectType type) {
