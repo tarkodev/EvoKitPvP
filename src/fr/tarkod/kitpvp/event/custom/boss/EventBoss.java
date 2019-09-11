@@ -26,14 +26,11 @@ public class EventBoss extends Event {
     }
 
     @Override
-    public void everySecond() {
-
-    }
+    public void everySecond() {}
 
     @Override
     public void onEnable() {
-        BlockLocation blockLocation = getMain().getLootManager().getLootProfile().getLootLocationList()
-                .get(new Random().nextInt(getMain().getLootManager().getLootProfile().getLootLocationList().size()));
+        BlockLocation blockLocation = getMain().getDataManager().getLootManager().getLootProfile().getLootLocationList().get(new Random().nextInt(getMain().getDataManager().getLootManager().getLootProfile().getLootLocationList().size()));
         Location location = blockLocation.getLocation("world");
         boss = (Zombie) Bukkit.getWorld("world").spawnEntity(location, EntityType.ZOMBIE);
         boss.setMaxHealth(1000);
@@ -45,20 +42,18 @@ public class EventBoss extends Event {
 
     @EventHandler
     public void onEntityDeath(EntityDamageByEntityEvent event){
-        if(isEnable()) {
-            if (event.getEntity().getEntityId() == boss.getEntityId()) {
-                Entity killer = event.getDamager();
-                if (boss.getHealth() - event.getFinalDamage() <= 0) {
-                    Bukkit.broadcastMessage(ChatColor.AQUA + "Bravo à " + ChatColor.AQUA + killer.getName() + ChatColor.AQUA + " pour avoir tué le boss !");
-                    if (killer instanceof Player) {
-                        Player player = ((Player) killer).getPlayer();
-                        int moneyWin = 1000;
-                        Profile profile = getMain().getDataManager().getProfileManager().get(player.getUniqueId());
-                        profile.setMoney(profile.getMoney() + moneyWin);
-                        Bukkit.broadcastMessage(ChatColor.GOLD + "Il gagne " + ChatColor.GREEN + moneyWin + "€");
-                    }
-                    stop();
+        if (event.getEntity().getEntityId() == boss.getEntityId()) {
+            Entity killer = event.getDamager();
+            if (boss.getHealth() - event.getFinalDamage() <= 0) {
+                Bukkit.broadcastMessage(ChatColor.AQUA + "Bravo à " + ChatColor.AQUA + killer.getName() + ChatColor.AQUA + " pour avoir tué le boss !");
+                if (killer instanceof Player) {
+                    Player player = ((Player) killer).getPlayer();
+                    int moneyWin = 1000;
+                    Profile profile = getMain().getDataManager().getProfileManager().get(player.getUniqueId());
+                    profile.setMoney(profile.getMoney() + moneyWin);
+                    Bukkit.broadcastMessage(ChatColor.GOLD + "Il gagne " + ChatColor.GREEN + moneyWin + "€");
                 }
+                stop();
             }
         }
     }

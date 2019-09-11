@@ -21,13 +21,15 @@ public class EventGui {
         this.inventory = new EvoInventory("Sélection d'Event", 27, main);
     }
 
-    public void open(Player player){
+    public void open(Player player) {
         load();
         player.openInventory(inventory.getInventory());
     }
 
-    private void load(){
+    private void load() {
         EventManager eventManager = main.getEventManager();
+
+        // Set all event items
         for (int i = 0; i < eventManager.getRegisteredEvents().size(); i++) {
             Event event = eventManager.getRegisteredEvents().get(i);
             inventory.setItem(i, new EvoInvItem(new ItemBuilder(event.getMaterial())
@@ -36,6 +38,8 @@ public class EventGui {
                     .toItemStack(),
                     e -> eventManager.launchEvent(event)));
         }
-        inventory.setItem(26, new EvoInvItem(new ItemBuilder(Material.BARRIER).setName(ChatColor.RED + "Arrêté les events en cours").toItemStack(), e -> eventManager.stopEvent()));
+
+        // Set cancel event item
+        inventory.setItem(26, new EvoInvItem(new ItemBuilder(Material.BARRIER).setName(ChatColor.RED + "Arreter les events en cours").toItemStack(), e -> eventManager.stopEvent()));
     }
 }

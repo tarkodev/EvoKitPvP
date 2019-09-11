@@ -1,24 +1,18 @@
 package fr.tarkod.kitpvp.kit.commands;
 
 import fr.tarkod.kitpvp.KitPvP;
-import fr.tarkod.kitpvp.item.ItemRarity;
 import fr.tarkod.kitpvp.kit.KitManager;
 import fr.tarkod.kitpvp.kit.kit.Kit;
 import fr.tarkod.kitpvp.kit.kit.KitArmor;
 import fr.tarkod.kitpvp.kit.kit.KitPvPItem;
 import fr.tarkod.kitpvp.profile.Profile;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-
-import java.util.Comparator;
 
 public class KitCommand extends Command {
 
@@ -36,11 +30,11 @@ public class KitCommand extends Command {
             Profile playerProfile = main.getDataManager().getProfileManager().get(player.getUniqueId());
             KitManager kitManager = main.getDataManager().getKitManager();
             if(args.length == 0){
-                //if(!playerProfile.getFight().isFighting()) {
-                    main.getDataManager().getProfileManager().get(player.getUniqueId()).getInventory().open();
-                /*} else {
-                    player.sendMessage(ChatColor.RED + "Tu ne peux pas faire ceci car tu es en combat pendant encore " + ChatColor.GRAY + playerProfile.getFight().getTimeLeft() + ChatColor.RED + " secondes !");
-                }*/
+                if(kitManager.isEnable()) {
+                    kitManager.openKitSelectionGui(playerProfile);
+                } else {
+                    player.sendMessage(ChatColor.RED + "L'ouverture du menu de kit est désactivé ! (Event ou Bug)");
+                }
             }
             if (args.length == 1) {
                 String a = args[0];
@@ -65,7 +59,7 @@ public class KitCommand extends Command {
                             Kit kit = kitManager.getKitByName(a);
                             String string = playerProfile.getUnlockedKit().stream().filter(s -> s.equalsIgnoreCase(kit.getName())).findFirst().orElse(null);
                             if (string != null) {
-                                kit.apply(player);
+                                kit.apply(player, main);
                             } else {
                                 player.sendMessage(ChatColor.RED + "Erreur: Tu n'as pas ce kit");
                             }
@@ -125,21 +119,21 @@ public class KitCommand extends Command {
                                 for (int i = 0; i < inventory.getContents().length; i++) {
                                     ItemStack[] contents = inventory.getContents();
                                     if (contents[i] != null) {
-                                        kit.setItem(i, new KitPvPItem(contents[i], ItemRarity.KIT));
+                                        kit.setItem(i, new KitPvPItem(contents[i]));
                                     }
                                 }
                                 KitArmor armor = kit.getArmor();
                                 if(inventory.getHelmet() != null) {
-                                    armor.setHelmet(new KitPvPItem(inventory.getHelmet(), ItemRarity.KIT));
+                                    armor.setHelmet(new KitPvPItem(inventory.getHelmet()));
                                 }
                                 if(inventory.getChestplate() != null) {
-                                    armor.setChestplate(new KitPvPItem(inventory.getChestplate(), ItemRarity.KIT));
+                                    armor.setChestplate(new KitPvPItem(inventory.getChestplate()));
                                 }
                                 if(inventory.getLeggings() != null) {
-                                    armor.setLeggings(new KitPvPItem(inventory.getLeggings(), ItemRarity.KIT));
+                                    armor.setLeggings(new KitPvPItem(inventory.getLeggings()));
                                 }
                                 if(inventory.getBoots() != null) {
-                                    armor.setBoots(new KitPvPItem(inventory.getBoots(), ItemRarity.KIT));
+                                    armor.setBoots(new KitPvPItem(inventory.getBoots()));
                                 }
                                 player.sendMessage("Kit Set");
                             }
@@ -147,7 +141,7 @@ public class KitCommand extends Command {
                         case "get":
                             if (kitManager.getKitByName(b) != null) {
                                 Kit kit = kitManager.getKitByName(b);
-                                kit.apply(player);
+                                kit.apply(player, main);
                                 player.sendMessage("Kit applied !");
                             } else {
                                 player.sendMessage("kit not defined");

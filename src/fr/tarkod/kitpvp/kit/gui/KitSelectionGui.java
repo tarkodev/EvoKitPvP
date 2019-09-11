@@ -18,13 +18,13 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 
-public class KitGui {
+public class KitSelectionGui {
 
     private EvoInventory inventory;
     private KitPvP main;
     private Profile profile;
 
-    public KitGui(Profile profile, KitPvP main) {
+    public KitSelectionGui(Profile profile, KitPvP main) {
         this.profile = profile;
         this.main = main;
 

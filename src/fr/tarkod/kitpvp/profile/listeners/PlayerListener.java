@@ -1,21 +1,15 @@
 package fr.tarkod.kitpvp.profile.listeners;
 
 import java.io.File;
-import java.util.*;
 
-import fr.tarkod.kitpvp.item.ItemRarity;
 import fr.tarkod.kitpvp.profile.Profile;
-import fr.tarkod.kitpvp.timer.RespawnTimer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import fr.tarkod.kitpvp.KitPvP;
-import fr.tarkod.kitpvp.utils.FileUtils;
-import org.bukkit.inventory.ItemStack;
 
 public class PlayerListener implements Listener {
 

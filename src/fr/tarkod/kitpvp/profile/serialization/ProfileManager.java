@@ -33,6 +33,7 @@ public class ProfileManager {
     public Profile get(UUID uuid){
         return get(uuid, true);
     }
+
     public Profile get(UUID uuid, boolean defaultLoad){
         File file = new File(folder, uuid + ".json");
 
@@ -45,12 +46,12 @@ public class ProfileManager {
                 String json = FileUtils.loadContent(file);
                 profile = profileSerializationManager.deserialize(json);
             } else {
-                profile = new Profile(uuid);
+                profile = new Profile(uuid, main);
             }
             if (defaultLoad) {
-                profile.defaultLoad();
+                profile.defaultLoad(main);
             } else {
-                profile.defaultLoad(false, false, false);
+                profile.defaultLoad(false, false, false, main);
             }
         }
         if(defaultLoad) {

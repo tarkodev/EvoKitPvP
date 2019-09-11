@@ -16,7 +16,10 @@ import fr.tarkod.kitpvp.commands.remove.RemoveCommand;
 import fr.tarkod.kitpvp.commands.useless.UuidCommand;
 import fr.tarkod.kitpvp.event.EventManager;
 import fr.tarkod.kitpvp.event.command.EventCommand;
-import fr.tarkod.kitpvp.item.CancelDropKitItem;
+import fr.tarkod.kitpvp.item.itemrarity.command.ItemRarityCommand;
+import fr.tarkod.kitpvp.item.itemspecificity.command.ItemSpecificityCommand;
+import fr.tarkod.kitpvp.item.listeners.ItemListener;
+import fr.tarkod.kitpvp.loot.commands.LootCmd;
 import fr.tarkod.kitpvp.kit.chest.KitChest;
 import fr.tarkod.kitpvp.kit.commands.KitCommand;
 import fr.tarkod.kitpvp.listeners.*;
@@ -33,11 +36,9 @@ import org.bukkit.command.Command;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.tarkod.kitpvp.bounty.BountyCheck;
-import fr.tarkod.kitpvp.item.LootItemOnDeath;
 import fr.tarkod.kitpvp.killstreak.KSCheck;
 import fr.tarkod.kitpvp.message.PlayerChat;
 import fr.tarkod.kitpvp.listeners.custom.MakeEventWork;
-import fr.tarkod.kitpvp.loot.LootManager;
 import fr.tarkod.kitpvp.profile.ProfileSerializationManager;
 import fr.tarkod.kitpvp.utils.welcome.PlayerJoinLeft;
 import fr.tarkod.kitpvp.utils.welcome.WelcomeCmd;
@@ -48,7 +49,6 @@ public class KitPvP extends JavaPlugin {
 	
 	public static KitPvP INSTANCE;
 	
-	private LootManager lm;
 	private Configurator configurator;
 	private KitChest kitChest;
 	private DataManager dataManager;
@@ -77,7 +77,6 @@ public class KitPvP extends JavaPlugin {
 		
 		this.profileSerializationManager = new ProfileSerializationManager();
 		
-		lm = new LootManager(this);
 		configurator = new Configurator(this);
 		kitChest = new KitChest(configurator.getConfigYml().getKitChest());
 		this.gson = new GsonBuilder()
@@ -96,8 +95,6 @@ public class KitPvP extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
-		lm.removeAllLoot();
-		lm.saveFile();
 		blockManager.getBlockLocations().forEach((blockLocation, integer) -> blockLocation.getLocation("world").getBlock().setType(Material.AIR));
 		dataManager.getProfileManager().save();
 	}
@@ -111,7 +108,6 @@ public class KitPvP extends JavaPlugin {
 				new PlayerDropItem(),
 				new PlayerJoin(),
 				new WeatherChange(),
-				new LootItemOnDeath(),
 				new KSCheck(this),
 				new MakeEventWork(this),
 				new BountyCheck(this),
@@ -127,8 +123,8 @@ public class KitPvP extends JavaPlugin {
 				new RemoveCommand(),
 				new TablistName(this),
 				new TablistHeaderFooter(),
-				new CancelDropKitItem(),
-				new PlayerRespawn(this)
+				new PlayerRespawn(this),
+				new ItemListener(this)
 		).forEach(event -> getServer().getPluginManager().registerEvents(event, this));
 	}
 	
@@ -160,7 +156,10 @@ public class KitPvP extends JavaPlugin {
 				new InvseeCommand(this),
 				new PrestigeCmd(this),
 				new SoundCommand(this),
-				new StatsCommand(this)
+				new StatsCommand(this),
+				new ItemRarityCommand(this),
+				new ItemSpecificityCommand(this),
+				new TphereCommand()
 		).forEach(this::registerCommand);
 	}
 	
@@ -176,10 +175,6 @@ public class KitPvP extends JavaPlugin {
 		return profileSerializationManager;
 	}
 	
-	public LootManager getLootManager() {
-		return lm;
-	}
-
 	public Configurator getConfigurator() {
 		return configurator;
 	}

@@ -1,5 +1,6 @@
 package fr.tarkod.kitpvp.kit.kit;
 
+import fr.tarkod.kitpvp.KitPvP;
 import fr.tarkod.kitpvp.utils.InventoryUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -56,25 +57,27 @@ public class Kit {
         return name;
     }
 
-    public void apply(Player player) {
+    public void apply(Player player, KitPvP main) {
         PlayerInventory inventory = player.getInventory();
         player.getActivePotionEffects().forEach(potionEffect -> player.removePotionEffect(potionEffect.getType()));
         List<KitPvPItem> kitPvPItems = new ArrayList<>();
         inventory.clear();
-        itemMap.forEach((integer, kitPvPItem) -> inventory.setItem(integer, kitPvPItem.toItemStack()));
+        itemMap.forEach((integer, kitPvPItem) -> {
+            inventory.setItem(integer, kitPvPItem.toItemStack(main));
+        });
         ItemStack air = new ItemStack(Material.AIR);
         player.getEquipment().setArmorContents(new ItemStack[]{air, air, air, air});
         if(armor.getHelmet() != null) {
-            player.getEquipment().setHelmet(armor.getHelmet().toItemStack());
+            player.getEquipment().setHelmet(armor.getHelmet().toItemStack(main));
         }
         if(armor.getChestplate() != null) {
-            player.getEquipment().setChestplate(armor.getChestplate().toItemStack());
+            player.getEquipment().setChestplate(armor.getChestplate().toItemStack(main));
         }
         if(armor.getLeggings() != null) {
-            player.getEquipment().setLeggings(armor.getLeggings().toItemStack());
+            player.getEquipment().setLeggings(armor.getLeggings().toItemStack(main));
         }
         if(armor.getBoots() != null) {
-            player.getEquipment().setBoots(armor.getBoots().toItemStack());
+            player.getEquipment().setBoots(armor.getBoots().toItemStack(main));
         }
     }
 

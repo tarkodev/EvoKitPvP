@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -15,7 +14,7 @@ import fr.tarkod.kitpvp.utils.ItemBuilder;
 
 public enum ItemRarity {
 	
-	KIT("KIT ITEM", ChatColor.GRAY),
+	/*KIT("KIT ITEM", ChatColor.GRAY),
 	COMMON("COMMON", ChatColor.WHITE),
 	UNCOMMON("UNCOMMON", ChatColor.GREEN),
 	RARE("RARE", ChatColor.BLUE),
@@ -120,7 +119,7 @@ public enum ItemRarity {
 	}
 	
 	public static HashMap<ItemRarity, List<ItemStack>> inventoryChecker(Player player) {
-		Inventory inv = player.getInventory();
+		Inventory inv = player.getKitSelection();
 		List<ItemStack> invContents = new ArrayList<ItemStack>(Arrays.asList(inv.getContents()));
 		for(ItemStack item : player.getEquipment().getArmorContents()) {
 			if(item != null) {
@@ -142,5 +141,5 @@ public enum ItemRarity {
 			itemList.put(rarity, rarityList);
 		}
 		return itemList;
-	}
+	}*/
 }

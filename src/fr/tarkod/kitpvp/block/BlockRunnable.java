@@ -1,7 +1,6 @@
 package fr.tarkod.kitpvp.block;
 
 import fr.tarkod.kitpvp.loot.BlockLocation;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.scheduler.BukkitRunnable;
 
