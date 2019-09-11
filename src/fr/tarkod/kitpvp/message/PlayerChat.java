@@ -39,48 +39,4 @@ public class PlayerChat implements Listener {
 
 		e.setFormat(stringBuilder.toString());
 	}
-
-	public String getLevel(int l){
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(ChatColor.GRAY + "[");
-		ChatColor chatColor = null;
-		if(0 <= l && l < 10){
-			chatColor = ChatColor.GRAY;
-		}
-		else if (10 <= l && l < 20) {
-			chatColor = ChatColor.WHITE;
-		}
-		else if (20 <= l && l < 30) {
-			chatColor = ChatColor.GREEN;
-		}
-		else if (30 <= l && l < 40) {
-			chatColor = ChatColor.DARK_GREEN;
-		}
-		else if (40 <= l && l < 50) {
-			chatColor = ChatColor.YELLOW;
-		}
-		else if (50 <= l && l < 60) {
-			chatColor = ChatColor.GOLD;
-		}
-		else if (60 <= l && l < 70) {
-			chatColor = ChatColor.RED;
-		}
-		else if (70 <= l && l < 80) {
-			chatColor = ChatColor.LIGHT_PURPLE;
-		}
-		else if (80 <= l && l < 90) {
-			chatColor = ChatColor.DARK_PURPLE;
-		}
-		else if (90 <= l && l < 100) {
-			chatColor = ChatColor.BLACK;
-		}
-		else if (l >= 100) {
-			chatColor = ChatColor.BOLD;
-			stringBuilder.append(ChatColor.RED);
-		}
-		stringBuilder.append(chatColor + "" + l);
-		stringBuilder.append(ChatColor.GRAY + "]");
-		return stringBuilder.toString();
-	}
-
 }

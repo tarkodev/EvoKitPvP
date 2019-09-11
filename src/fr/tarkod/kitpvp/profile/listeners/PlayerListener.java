@@ -32,9 +32,6 @@ public class PlayerListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent e){
         Player player = e.getPlayer();
         Profile profile = main.getDataManager().getProfileManager().get(player.getUniqueId());
-		if(profile.getFight().isFighting()){
-			player.damage(player.getHealth());
-		}
         profile.destroy();
         profile.setName(player.getName());
         main.getDataManager().getProfileManager().save(player.getUniqueId());

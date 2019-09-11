@@ -1,7 +1,6 @@
 package fr.tarkod.kitpvp.kit.gui;
 
 import fr.tarkod.kitpvp.KitPvP;
-import fr.tarkod.kitpvp.item.ItemRarity;
 import fr.tarkod.kitpvp.kit.KitManager;
 import fr.tarkod.kitpvp.kit.kit.Kit;
 import fr.tarkod.kitpvp.profile.Profile;
@@ -9,14 +8,9 @@ import fr.tarkod.kitpvp.utils.EvoInventory.EvoInvItem;
 import fr.tarkod.kitpvp.utils.EvoInventory.EvoInventory;
 import fr.tarkod.kitpvp.utils.ItemBuilder;
 import org.bukkit.ChatColor;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
-
-import java.time.Instant;
-import java.util.HashMap;
-import java.util.List;
 
 public class KitSelectionGui {
 
@@ -57,7 +51,7 @@ public class KitSelectionGui {
                         kitManager.setKit(kit, profile);
                     }
                 } else if (event.getClick() == ClickType.RIGHT) {
-                    new ViewKitGui(kit, main).open(player);
+                    new KitViewerGui(kit, main).open(player);
                 }
                 load();
             }));

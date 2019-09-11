@@ -31,7 +31,7 @@ public class KitCommand extends Command {
             KitManager kitManager = main.getDataManager().getKitManager();
             if(args.length == 0){
                 if(kitManager.isEnable()) {
-                    kitManager.openKitSelectionGui(playerProfile);
+                    kitManager.openSelectionGui(playerProfile);
                 } else {
                     player.sendMessage(ChatColor.RED + "L'ouverture du menu de kit est désactivé ! (Event ou Bug)");
                 }
