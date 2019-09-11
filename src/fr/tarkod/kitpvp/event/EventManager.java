@@ -43,7 +43,7 @@ public class EventManager {
                 new EventBoss("BOSS", "Le 1er qui le tue gagne 1000$, bonne chance !", Material.ROTTEN_FLESH, 120, main),
                 new EventPvPBox("PvPBox", "Qui sera le dernier ? (Le gagnant gagne 1000$)", Material.IRON_SWORD, 10, main),
                 new EventSoulPotion("Potion d'âme", "Chaque kill vous donnera un niveau d'un effet de potion aléatoire !", Material.POTION, 5*60, main),
-                new EventDoubleAll("Double tout", "Tout est doublé !", Material.FIRE, 2*60, main)
+                new EventDoubleAll("Double tout", "Tout est doublé !", Material.BLAZE_POWDER, 2*60, main)
         ));
     }
 

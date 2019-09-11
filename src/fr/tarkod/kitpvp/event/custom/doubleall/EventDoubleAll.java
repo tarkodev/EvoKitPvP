@@ -3,10 +3,7 @@ package fr.tarkod.kitpvp.event.custom.doubleall;
 import fr.tarkod.kitpvp.KitPvP;
 import fr.tarkod.kitpvp.event.Event;
 import fr.tarkod.kitpvp.listeners.custom.EGPlayerRespawnEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.Effect;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -58,9 +55,14 @@ public class EventDoubleAll extends Event {
         Player player = event.getPlayer();
 
         if (!(player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR ||
-                player.isFlying() || player.hasPotionEffect(PotionEffectType.INVISIBILITY))) {
-            noFlight(player);
-            player.setVelocity(event.getPlayer().getLocation().getDirection().multiply(1.5).setY(1));
+                player.hasPotionEffect(PotionEffectType.INVISIBILITY))) {
+
+            event.setCancelled(true);
+
+            if (player.getAllowFlight()) {
+                noFlight(player);
+                player.setVelocity(event.getPlayer().getLocation().getDirection().multiply(1.5).setY(1));
+            }
         }
     }
 
@@ -106,9 +108,12 @@ public class EventDoubleAll extends Event {
     @EventHandler
     public void hitTheGround(PlayerMoveEvent event) {
         Player player = event.getPlayer();
+        Location playerLoc = player.getLocation();
 
         if (!player.getAllowFlight()) {
-            player.setAllowFlight(true);
+            if (!new Location(playerLoc.getWorld(), playerLoc.getX(), playerLoc.getY() - 1, playerLoc.getZ()).getBlock().getType().equals(Material.AIR)) {
+                player.setAllowFlight(true);
+            }
         }
     }
 
