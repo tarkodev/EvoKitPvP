@@ -25,7 +25,6 @@ public class EventSoulPotion extends Event {
 
     private Map<UUID, PlayerPotionEffectsInformations> playersEffects = new HashMap<>();
 
-
     public EventSoulPotion(String name, String description, Material material, int maxTime, KitPvP main) {
         super(name, description, material, maxTime, main);
     }
@@ -33,6 +32,13 @@ public class EventSoulPotion extends Event {
     @EventHandler
     public void onDeathByPlayer(EGPlayerDeathByEntityEvent event) {
         if (!(event.getKiller() instanceof Player)) return;
+
+        Player victim = event.getVictim();
+        UUID victimUUID = victim.getUniqueId();
+
+        if (playersEffects.containsKey(victimUUID)) {
+            playersEffects.get(victimUUID).cleanTemporaryEffects();
+        }
 
         Player killer = (Player) event.getKiller();
         UUID killerUUID = killer.getUniqueId();
@@ -58,17 +64,28 @@ public class EventSoulPotion extends Event {
     }
 
     @EventHandler
-    public void onGoldAppleAte(PlayerItemConsumeEvent event) {
+    public void onItemConsume(PlayerItemConsumeEvent event) {
         Player player = event.getPlayer();
         ItemStack itemConsumed = event.getItem();
 
         switch (itemConsumed.getType()) {
             case GOLDEN_APPLE:
+                if (itemConsumed.getDurability() == 1) {
+                    playersEffects.get(player.getUniqueId())
+                            .addTemporaryEffects(new PotionEffect(PotionEffectType.REGENERATION, 20*20, 1));
+
+                    playersEffects.get(player.getUniqueId())
+                            .addTemporaryEffects(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5*20*20, 1));
+                } else {
+                    playersEffects.get(player.getUniqueId())
+                            .addTemporaryEffects(new PotionEffect(PotionEffectType.REGENERATION, 5*20, 1));
+                }
 
                 break;
 
             case POTION:
-                Collection<PotionEffect> effects = Potion.fromItemStack(itemConsumed).getEffects();
+                Potion.fromItemStack(itemConsumed).getEffects()
+                        .forEach(effect -> playersEffects.get(player.getUniqueId()).addTemporaryEffects(effect));
                 break;
 
             case MILK_BUCKET:
@@ -79,17 +96,23 @@ public class EventSoulPotion extends Event {
             default:
                 break;
         }
-    }
 
-    private void test() {
-
+        playersEffects.get(player.getUniqueId()).setEffectsOnPlayer(player);
     }
 
     @Override
-    public void everySecond() {}
+    public void everySecond() {
+        temporaryCheck();
+    }
+
+    private void temporaryCheck() {
+        Bukkit.getOnlinePlayers().forEach(player -> playersEffects.get(player.getUniqueId()).decrementAndCheckTemporaryEffects(player));
+    }
 
     @Override
-    public void onEnable() {}
+    public void onEnable() {
+        Bukkit.getOnlinePlayers().forEach(this::clearPotionEffects);
+    }
 
     @Override
     public void onDisable() {
