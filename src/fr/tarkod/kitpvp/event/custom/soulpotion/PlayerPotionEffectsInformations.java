@@ -16,8 +16,13 @@ public class PlayerPotionEffectsInformations {
      * Clear all active effect and apply all effects stored for an infinite times
      */
     public void setEffectsOnPlayer(Player player) {
-        player.getActivePotionEffects().clear();
         effectsLevels.forEach((type, level) -> player.addPotionEffect(new PotionEffect(type, Integer.MAX_VALUE, level-1)));
+    }
+
+    public void setEffectsOnPlayer(Player player, PotionEffectType type) {
+        if (effectsLevels.containsKey(type)) {
+            player.addPotionEffect(new PotionEffect(type, Integer.MAX_VALUE, effectsLevels.get(type)-1));
+        }
     }
 
     public int getEffectLevel(PotionEffectType type) {
