@@ -11,7 +11,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-public class ConfirmKitGui {
+public class KitConfirmGui {
 
     private EvoInventory inventory;
     private KitPvP main;
@@ -19,7 +19,7 @@ public class ConfirmKitGui {
     private Profile profile;
     private Kit kit;
 
-    public ConfirmKitGui(Kit kit, Profile profile, KitPvP main) {
+    public KitConfirmGui(Kit kit, Profile profile, KitPvP main) {
         this.profile = profile;
         this.kit = kit;
         this.main = main;
@@ -41,13 +41,13 @@ public class ConfirmKitGui {
             load();
         }));
         inventory.setItem(29, new EvoInvItem(new ItemBuilder(Material.INK_SACK).setDurability((short) 1).setName(ChatColor.RED + "Retour").toItemStack(), event -> {
-            kitManager.openKitSelectionGui(profile);
+            kitManager.openSelectionGui(profile);
         }));
         inventory.setItem(33, new EvoInvItem(new ItemBuilder(Material.INK_SACK).setDurability((short) 10).setName(ChatColor.GREEN + "Confirmer").toItemStack(), event -> {
             if(kitManager.canUnlock(kit, profile)) {
                 profile.setMoney(profile.getMoney() - kit.getMoneyCost());
                 kitManager.unlockForce(kit, profile);
-                kitManager.openKitSelectionGui(profile);
+                kitManager.openSelectionGui(profile);
             }
         }));
     }

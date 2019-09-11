@@ -3,6 +3,7 @@ package fr.tarkod.kitpvp.combat;
 import fr.tarkod.kitpvp.KitPvP;
 import fr.tarkod.kitpvp.profile.Profile;
 import org.bukkit.Bukkit;
+import org.bukkit.PortalType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -11,10 +12,16 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
 
 public class FightManager implements Listener {
 
     private KitPvP main;
+    private ConcurrentMap<Profile, Integer> profileIntegerMap = new ConcurrentHashMap<>();
 
     public FightManager(KitPvP main) {
         this.main = main;
@@ -22,18 +29,44 @@ public class FightManager implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onDamage(EntityDamageByEntityEvent event){
+    public void onDamage(EntityDamageByEntityEvent event) {
         if(event.getEntity() instanceof Player && event.getDamager() instanceof Player){
+
             Player victim = (Player) event.getEntity();
             Profile victimProfile = main.getDataManager().getProfileManager().get(victim.getUniqueId());
             Player damager = (Player) event.getDamager();
             Profile damagerProfile = main.getDataManager().getProfileManager().get(damager.getUniqueId());
-            victimProfile.getFight().setTimeLeft(17);
-            damagerProfile.getFight().setTimeLeft(17);
+
+            profileIntegerMap.put(victimProfile, 17);
+            profileIntegerMap.put(damagerProfile, 17);
         }
     }
 
-    public void runnable(){
+    public boolean isFighting(Profile profile) {
+        return profileIntegerMap.containsKey(profile);
+    }
+
+    public void setTimeLeft(int time, Profile profile) {
+        profileIntegerMap.put(profile, time);
+    }
+
+    public int getTimeLeft(Profile profile) {
+        return profileIntegerMap.get(profile);
+    }
+
+    public void runnable() {
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                profileIntegerMap.forEach((profile, integer) -> {
+                    profileIntegerMap.put(profile, integer - 1);
+                    if(integer <= 0) profileIntegerMap.remove(profile);
+                });
+            }
+        }.runTaskTimer(main, 0, 20);
+    }
+
+    /*public void runnable() {
         new BukkitRunnable(){
             @Override
             public void run() {
@@ -42,5 +75,5 @@ public class FightManager implements Listener {
                         .forEach(profile -> profile.getFight().setTimeLeft(profile.getFight().getTimeLeft() - 1));
             }
         }.runTaskTimer(main, 0, 20);
-    }
+    }*/
 }

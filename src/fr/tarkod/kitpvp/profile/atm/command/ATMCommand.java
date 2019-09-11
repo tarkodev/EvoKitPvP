@@ -1,7 +1,6 @@
 package fr.tarkod.kitpvp.profile.atm.command;
 
 import fr.tarkod.kitpvp.KitPvP;
-import fr.tarkod.kitpvp.combat.Fight;
 import fr.tarkod.kitpvp.profile.Profile;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
