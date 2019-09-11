@@ -9,6 +9,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.PotionSplashEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.*;
@@ -16,6 +21,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class EventSoulPotion extends Event {
+
+    private final List<PotionEffectType> pvpEffect = Stream.of(PVPImpactPotionEffectType.values()).map(PVPImpactPotionEffectType::getPotionEffectType).collect(Collectors.toList());
 
     private Map<UUID, PlayerPotionEffectsInformations> playersEffects = new HashMap<>();
 
@@ -26,6 +33,13 @@ public class EventSoulPotion extends Event {
     @EventHandler
     public void onDeathByPlayer(EGPlayerDeathByEntityEvent event) {
         if (!(event.getKiller() instanceof Player)) return;
+
+        Player victim = event.getVictim();
+        UUID victimUUID = victim.getUniqueId();
+
+        if (playersEffects.containsKey(victimUUID)) {
+            playersEffects.get(victimUUID).cleanTemporaryEffects();
+        }
 
         Player killer = (Player) event.getKiller();
         UUID killerUUID = killer.getUniqueId();
@@ -43,28 +57,92 @@ public class EventSoulPotion extends Event {
         playersEffects.get(killerUUID).setEffectsOnPlayer(killer);
     }
 
-    @Override
-    public void everySecond() {}
+    @EventHandler
+    public void onRespawn(EGPlayerRespawnEvent event) {
+        Player player = event.getPlayer();
+
+        playersEffects.get(player.getUniqueId()).setEffectsOnPlayer(player);
+    }
+
+    @EventHandler
+    public void onItemConsume(PlayerItemConsumeEvent event) {
+        Player player = event.getPlayer();
+        ItemStack itemConsumed = event.getItem();
+
+        switch (itemConsumed.getType()) {
+            case GOLDEN_APPLE:
+                if (itemConsumed.getDurability() == 1) {
+                    playersEffects.get(player.getUniqueId())
+                            .addTemporaryEffects(new PotionEffect(PotionEffectType.REGENERATION, 20*20, 1));
+
+                    playersEffects.get(player.getUniqueId())
+                            .addTemporaryEffects(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5*20*20, 1));
+                } else {
+                    playersEffects.get(player.getUniqueId())
+                            .addTemporaryEffects(new PotionEffect(PotionEffectType.REGENERATION, 5*20, 1));
+                }
+
+                break;
+
+            case POTION:
+                Potion.fromItemStack(itemConsumed).getEffects()
+                        .forEach(effect -> playersEffects.get(player.getUniqueId()).addTemporaryEffects(effect));
+                break;
+
+            case MILK_BUCKET:
+                clearPotionEffects(player);
+                playersEffects.get(player.getUniqueId()).setEffectsOnPlayer(player);
+                break;
+
+            default:
+                break;
+        }
+
+        playersEffects.get(player.getUniqueId()).setEffectsOnPlayer(player);
+    }
+
+    @EventHandler
+    public void splashPotion(PotionSplashEvent event) {
+        Collection<PotionEffect> effects = event.getPotion().getEffects();
+
+        event.getAffectedEntities().forEach(entity -> {
+            if (entity instanceof Player) {
+                Player player = (Player) entity;
+                effects.forEach(effect -> playersEffects.get(player.getUniqueId())
+                        .addTemporaryEffects(new PotionEffect(effect.getType(), effect.getDuration(), effect.getAmplifier())));
+
+                playersEffects.get(player.getUniqueId()).setEffectsOnPlayer(player);
+            }
+        });
+    }
 
     @Override
-    public void onEnable() {}
+    public void everySecond() {
+        temporaryCheck();
+    }
+
+    private void temporaryCheck() {
+        Bukkit.getOnlinePlayers().forEach(player -> playersEffects.get(player.getUniqueId()).decrementAndCheckTemporaryEffects(player));
+    }
+
+    @Override
+    public void onEnable() {
+        Bukkit.getOnlinePlayers().forEach(this::clearPotionEffects);
+    }
 
     @Override
     public void onDisable() {
-        List<PotionEffectType> pvpEffect = Stream.of(PVPImpactPotionEffectType.values()).map(PVPImpactPotionEffectType::getPotionEffectType).collect(Collectors.toList());
-
-        playersEffects.keySet().forEach(uuid -> {
-            Player player = Bukkit.getPlayer(uuid);
-
-            player.getActivePotionEffects().forEach(potionEffect -> {
-                PotionEffectType type = potionEffect.getType();
-
-                if (pvpEffect.contains(type)) {
-                    player.removePotionEffect(type);
-                }
-            });
-        });
-
+        playersEffects.keySet().forEach(uuid -> clearPotionEffects(Bukkit.getPlayer(uuid)));
         playersEffects.clear();
+    }
+
+    private void clearPotionEffects(Player player) {
+        player.getActivePotionEffects().forEach(potionEffect -> {
+            PotionEffectType type = potionEffect.getType();
+
+            if (pvpEffect.contains(type)) {
+                player.removePotionEffect(type);
+            }
+        });
     }
 }
