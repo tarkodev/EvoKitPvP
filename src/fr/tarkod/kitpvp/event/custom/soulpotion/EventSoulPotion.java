@@ -9,6 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.Potion;
@@ -98,6 +99,21 @@ public class EventSoulPotion extends Event {
         }
 
         playersEffects.get(player.getUniqueId()).setEffectsOnPlayer(player);
+    }
+
+    @EventHandler
+    public void splashPotion(PotionSplashEvent event) {
+        Collection<PotionEffect> effects = event.getPotion().getEffects();
+
+        event.getAffectedEntities().forEach(entity -> {
+            if (entity instanceof Player) {
+                Player player = (Player) entity;
+                effects.forEach(effect -> playersEffects.get(player.getUniqueId())
+                        .addTemporaryEffects(new PotionEffect(effect.getType(), effect.getDuration(), effect.getAmplifier())));
+
+                playersEffects.get(player.getUniqueId()).setEffectsOnPlayer(player);
+            }
+        });
     }
 
     @Override
