@@ -10,14 +10,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-public class KitViewGui {
+public class KitViewerGui {
 
     private KitPvP main;
 
     private Kit kit;
     private EvoInventory inventory;
 
-    public KitViewGui(Kit kit, KitPvP main) {
+    public KitViewerGui(Kit kit, KitPvP main) {
         this.kit = kit;
         this.main = main;
         this.inventory = new EvoInventory("Visualisation du kit " + kit.getName(), 9*5, main);

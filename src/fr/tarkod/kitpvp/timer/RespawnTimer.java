@@ -63,7 +63,7 @@ public class RespawnTimer extends BukkitRunnable implements Listener {
 		player.setFireTicks(0);
 		Title.sendTitle(player, 5, 10, 5, ChatColor.GOLD + "Réapparition !");
 		Bukkit.getPluginManager().callEvent(new EGPlayerRespawnEvent(player));
-		main.getDataManager().getProfileManager().get(player.getUniqueId()).getFight().setTimeLeft(0);
+		main.getFightManager().setTimeLeft(0, main.getDataManager().getProfileManager().get(player.getUniqueId()));
 		cancel();
 	}
 	

@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.UUID;
 
 import fr.tarkod.kitpvp.KitPvP;
-import fr.tarkod.kitpvp.combat.Fight;
-import fr.tarkod.kitpvp.kit.gui.KitSelectionGui;
 import fr.tarkod.kitpvp.profile.atm.ATMManager;
 import fr.tarkod.kitpvp.profile.cooldown.CooldownManager;
 import fr.tarkod.kitpvp.profile.level.PrestigeManager;
@@ -45,10 +43,8 @@ public class Profile {
 
 	private transient KitPvP main;
 
-	private transient KitSelectionGui ki;
 	private transient ScoreboardSign ss;
 	private transient LevelManager lm;
-	private transient Fight fight;
 
 	public Profile(UUID uuid, KitPvP main) {
 		this.kill = 0;
@@ -76,9 +72,6 @@ public class Profile {
 			}
 			cooldownManager.defaultLoad(this);
 		}
-		if(kitgui) {
-			this.ki = new KitSelectionGui(this, main);
-		}
 		if(Bukkit.getPlayer(uuid) != null){
 			name = Bukkit.getPlayer(uuid).getName();
 		}
@@ -94,9 +87,7 @@ public class Profile {
 		atmManager.defaultLoad(this);
 
 		LevelManager lm = new LevelManager(this, KitPvP.getInstance());
-		Fight fight = new Fight();
 		this.lm = lm;
-		this.fight = fight;
 		if(scoreBoard) {
 			ss = ScoreBoard.createScoreboard(this);
 			updateScoreBoard();
@@ -179,14 +170,6 @@ public class Profile {
 		updateScoreBoard();
 	}
 	
-	public KitSelectionGui getKitSelection() {
-		return ki;
-	}
-	
-	public void setInventory(KitSelectionGui ki) {
-		this.ki = ki;
-	}
-
 	public ScoreboardSign getScoreBoard() {
 		return ss;
 	}
@@ -251,9 +234,9 @@ public class Profile {
 		return settings;
 	}
 
-	public Fight getFight() {
+	/*public Fight getFight() {
 		return fight;
-	}
+	}*/
 
 	public CooldownManager getCooldownManager() {
 		return cooldownManager;

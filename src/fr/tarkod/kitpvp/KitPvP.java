@@ -24,7 +24,6 @@ import fr.tarkod.kitpvp.kit.chest.KitChest;
 import fr.tarkod.kitpvp.kit.commands.KitCommand;
 import fr.tarkod.kitpvp.listeners.*;
 import fr.tarkod.kitpvp.listeners.paytowin.KillAdvantage;
-import fr.tarkod.kitpvp.message.TabTitle;
 import fr.tarkod.kitpvp.message.tablist.TablistHeaderFooter;
 import fr.tarkod.kitpvp.message.tablist.TablistName;
 import fr.tarkod.kitpvp.profile.atm.command.ATMCommand;
@@ -114,7 +113,6 @@ public class KitPvP extends JavaPlugin {
 				new PlayerChat(this),
 				new PlayerJoinLeft(),
 				new PlayerListener(this),
-				new TabTitle(this),
 				new BumpPressurePlate(),
 				blockManager,
 				fightManager,

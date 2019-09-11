@@ -2,8 +2,9 @@ package fr.tarkod.kitpvp.kit;
 
 import com.google.gson.Gson;
 import fr.tarkod.kitpvp.KitPvP;
-import fr.tarkod.kitpvp.kit.gui.ConfirmKitGui;
+import fr.tarkod.kitpvp.kit.gui.KitConfirmGui;
 import fr.tarkod.kitpvp.kit.gui.KitSelectionGui;
+import fr.tarkod.kitpvp.kit.gui.KitViewerGui;
 import fr.tarkod.kitpvp.kit.kit.Kit;
 import fr.tarkod.kitpvp.profile.Profile;
 import org.bukkit.ChatColor;
@@ -68,21 +69,25 @@ public class KitManager {
         );
     }
 
-    public void openKitSelectionGui(Profile profile){
+    public void openSelectionGui(Profile profile) {
         new KitSelectionGui(profile, main).open();
+    }
+
+    public void openConfirmGui(Kit kit, Profile profile) {
+        new KitConfirmGui(kit, profile, main).open();
+    }
+
+    public void openKitViewerGui(Kit kit, Profile profile) {
+        new KitViewerGui(kit, main).open(profile.getPlayer());
     }
 
     public void lock(Kit kit, Profile profile) {
         profile.getUnlockedKit().remove(kit.getName());
     }
 
-    public void unlockConfirmGui(Kit kit, Profile profile) {
-        new ConfirmKitGui(kit, profile, main).open();
-    }
-
     public void unlock(Kit kit, Profile profile) {
         if(canUnlock(kit, profile)) {
-            unlockConfirmGui(kit, profile);
+            openConfirmGui(kit, profile);
         }
     }
 
