@@ -1,14 +1,18 @@
 package fr.tarkod.kitpvp.listeners.custom;
 
+import fr.tarkod.kitpvp.profile.Profile;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
+import java.util.Set;
+
 public class EGPlayerDeathByEntityEvent extends Event {
 
 	private Player victim;
     private Entity killer;
+
     private double damage;
     private boolean isGappleLoot;
     private int moneyDrop;

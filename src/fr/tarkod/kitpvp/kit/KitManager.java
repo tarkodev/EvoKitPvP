@@ -35,11 +35,11 @@ public class KitManager {
         this.loadKits();
     }
 
-    public void addKit(Kit kit) {
+    public void registerKit(Kit kit) {
         kits.add(kit);
     }
 
-    public void removeKit(Kit kit) {
+    public void unregisterKit(Kit kit) {
         kits.remove(kit);
     }
 
@@ -81,8 +81,13 @@ public class KitManager {
         new KitViewerGui(kit, main).open(profile.getPlayer());
     }
 
-    public void lock(Kit kit, Profile profile) {
+    public void remove(Kit kit, Profile profile) {
         profile.getUnlockedKit().remove(kit.getName());
+    }
+
+    public void refund(Kit kit, Profile profile) {
+        profile.setMoney(profile.getMoney() + kit.getMoneyCost());
+        remove(kit, profile);
     }
 
     public void unlock(Kit kit, Profile profile) {

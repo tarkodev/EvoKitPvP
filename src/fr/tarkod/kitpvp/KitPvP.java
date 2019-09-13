@@ -19,6 +19,8 @@ import fr.tarkod.kitpvp.event.command.EventCommand;
 import fr.tarkod.kitpvp.item.itemrarity.command.ItemRarityCommand;
 import fr.tarkod.kitpvp.item.itemspecificity.command.ItemSpecificityCommand;
 import fr.tarkod.kitpvp.item.listeners.ItemListener;
+import fr.tarkod.kitpvp.kit.commands.KitEditorCommand;
+import fr.tarkod.kitpvp.listeners.custom.EntityDamageByEntity;
 import fr.tarkod.kitpvp.loot.commands.LootCmd;
 import fr.tarkod.kitpvp.kit.chest.KitChest;
 import fr.tarkod.kitpvp.kit.commands.KitCommand;
@@ -96,6 +98,7 @@ public class KitPvP extends JavaPlugin {
 	public void onDisable() {
 		blockManager.getBlockLocations().forEach((blockLocation, integer) -> blockLocation.getLocation("world").getBlock().setType(Material.AIR));
 		dataManager.getProfileManager().save();
+		dataManager.getLootManager().removeAllLoot();
 	}
 	
 	public void loadListeners() {
@@ -131,6 +134,7 @@ public class KitPvP extends JavaPlugin {
 				new LootCmd(this),
 				new ExperienceCmd(this),
 				new KitCommand(this),
+				new KitEditorCommand(this),
 				new MoneyCmd(this),
 				new PayCmd(this),
 				new GainCmd(this),

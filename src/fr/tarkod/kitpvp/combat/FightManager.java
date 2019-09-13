@@ -1,6 +1,7 @@
 package fr.tarkod.kitpvp.combat;
 
 import fr.tarkod.kitpvp.KitPvP;
+import fr.tarkod.kitpvp.combat.assist.AssistManager;
 import fr.tarkod.kitpvp.profile.Profile;
 import org.bukkit.Bukkit;
 import org.bukkit.PortalType;
@@ -21,10 +22,13 @@ import java.util.concurrent.ConcurrentMap;
 public class FightManager implements Listener {
 
     private KitPvP main;
+
+    private AssistManager assistManager;
     private ConcurrentMap<Profile, Integer> profileIntegerMap = new ConcurrentHashMap<>();
 
     public FightManager(KitPvP main) {
         this.main = main;
+        this.assistManager = new AssistManager(main);
         runnable();
     }
 
@@ -64,6 +68,10 @@ public class FightManager implements Listener {
                 });
             }
         }.runTaskTimer(main, 0, 20);
+    }
+
+    public AssistManager getAssistManager() {
+        return assistManager;
     }
 
     /*public void runnable() {

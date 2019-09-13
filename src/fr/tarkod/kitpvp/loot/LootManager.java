@@ -21,6 +21,7 @@ public class LootManager {
         this.main = main;
         file = new File(main.getDataFolder(), "loot" + ".json");
         defaultLoad();
+        new LootRunnable(main).runTaskTimer(main, 20, 20);
     }
 
     private void defaultLoad() {
@@ -48,6 +49,10 @@ public class LootManager {
     public void saveFile() {
         ProfileSerializationManager profileSerializationManager = main.getProfileSerializationManager();
         FileUtils.saveFile(file, profileSerializationManager.serializeLocationList(lootProfile));
+    }
+
+    public void add(Loot loot){
+        lootList.add(loot);
     }
 
     public void removeAllLoot() {

@@ -6,6 +6,7 @@ import fr.tarkod.kitpvp.kit.kit.Kit;
 import fr.tarkod.kitpvp.kit.kit.KitArmor;
 import fr.tarkod.kitpvp.kit.kit.KitPvPItem;
 import fr.tarkod.kitpvp.profile.Profile;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -25,11 +26,11 @@ public class KitCommand extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String label, String[] args) {
-        if(sender instanceof Player){
+        if(sender instanceof Player) {
             Player player = (Player) sender;
             Profile playerProfile = main.getDataManager().getProfileManager().get(player.getUniqueId());
             KitManager kitManager = main.getDataManager().getKitManager();
-            if(args.length == 0){
+            if(args.length == 0) {
                 if(kitManager.isEnable()) {
                     kitManager.openSelectionGui(playerProfile);
                 } else {
@@ -53,101 +54,44 @@ public class KitCommand extends Command {
                         }
                     default:break;
                 }
-                if(player.isOp()) {
-                    if (canContinue) {
-                        if (kitManager.getKitByName(a) != null) {
-                            Kit kit = kitManager.getKitByName(a);
-                            String string = playerProfile.getUnlockedKit().stream().filter(s -> s.equalsIgnoreCase(kit.getName())).findFirst().orElse(null);
-                            if (string != null) {
-                                kit.apply(player, main);
-                            } else {
-                                player.sendMessage(ChatColor.RED + "Erreur: Tu n'as pas ce kit");
-                            }
-                        }
+                if (canContinue) {
+                    if (kitManager.getKitByName(a) != null) {
+                        Kit kit = kitManager.getKitByName(a);
+                        kitManager.setKit(kit, playerProfile);
+                    } else {
+                        player.sendMessage(ChatColor.RED + "Erreur: Ce kit n'existe pas");
                     }
                 }
             }
             if(player.isOp()) {
-                if (args.length == 1) {
-                    String a = args[0];
-                    switch (a) {
-                        case "listold":
-                            kitManager.getKits().forEach(kit -> {
-                                player.sendMessage(ChatColor.GOLD + "-----------------------");
-                                player.sendMessage(ChatColor.BLUE + "Kit: " + kit.getName());
-                            });
-                            break;
-                        case "save":
-                            kitManager.saveKits();
-                            player.sendMessage("Kit Saved");
-                            break;
-                        case "load":
-                            kitManager.loadKits();
-                            player.sendMessage("Kit Reloaded");
-                            break;
-                        case "default":
-                            kitManager.addKit(new Kit("DefaultKit"));
-                            player.sendMessage("Kit Default load (/kit load)");
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                if (args.length == 2) {
+                if(args.length == 3){
                     String a = args[0];
                     String b = args[1];
+                    String c = args[2];
+
+                    if(Bukkit.getPlayer(b) == null) return false;
+                    if(kitManager.getKitByName(c) == null) return false;
+
+                    Player victim = Bukkit.getPlayer(b);
+                    Kit kit = kitManager.getKitByName(c);
+                    Profile profile = main.getDataManager().getProfileManager().get(victim.getUniqueId());
+
                     switch (a) {
-                        case "create":
-                            kitManager.addKit(new Kit(b));
-                            player.sendMessage("Kit Added");
+                        case "refund":
+                            kitManager.refund(kit, profile);
                             break;
-                        case "delete":
-                            Kit kita = kitManager.getKitByName(b);
-                            if(kita != null) {
-                                kitManager.removeKit(kita);
-                                player.sendMessage("Kit Succesfully removed!");
-                            } else {
-                                player.sendMessage("kit null");
-                            }
+                        case "remove":
+                            kitManager.remove(kit, profile);
+                            break;
+                        case "unlock":
+                            kitManager.unlock(kit, profile);
+                            break;
+                        case "unlockForce":
+                            kitManager.unlockForce(kit, profile);
                             break;
                         case "set":
-                            if (kitManager.getKitByName(b) != null) {
-                                Kit kit = kitManager.getKitByName(b);
-                                kit.clear();
-                                PlayerInventory inventory = player.getInventory();
-                                EntityEquipment ee = player.getEquipment();
-                                for (int i = 0; i < inventory.getContents().length; i++) {
-                                    ItemStack[] contents = inventory.getContents();
-                                    if (contents[i] != null) {
-                                        kit.setItem(i, new KitPvPItem(contents[i]));
-                                    }
-                                }
-                                KitArmor armor = kit.getArmor();
-                                if(inventory.getHelmet() != null) {
-                                    armor.setHelmet(new KitPvPItem(inventory.getHelmet()));
-                                }
-                                if(inventory.getChestplate() != null) {
-                                    armor.setChestplate(new KitPvPItem(inventory.getChestplate()));
-                                }
-                                if(inventory.getLeggings() != null) {
-                                    armor.setLeggings(new KitPvPItem(inventory.getLeggings()));
-                                }
-                                if(inventory.getBoots() != null) {
-                                    armor.setBoots(new KitPvPItem(inventory.getBoots()));
-                                }
-                                player.sendMessage("Kit Set");
-                            }
-                            break;
-                        case "get":
-                            if (kitManager.getKitByName(b) != null) {
-                                Kit kit = kitManager.getKitByName(b);
-                                kit.apply(player, main);
-                                player.sendMessage("Kit applied !");
-                            } else {
-                                player.sendMessage("kit not defined");
-                            }
-                        default:
-                            break;
+                            kitManager.setKitForce(kit, profile);break;
+                        default:break;
                     }
                 }
             }

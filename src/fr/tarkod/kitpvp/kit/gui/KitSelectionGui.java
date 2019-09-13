@@ -51,7 +51,7 @@ public class KitSelectionGui {
                         kitManager.setKit(kit, profile);
                     }
                 } else if (event.getClick() == ClickType.RIGHT) {
-                    new KitViewerGui(kit, main).open(player);
+                    kitManager.openKitViewerGui(kit, profile);
                 }
                 load();
             }));

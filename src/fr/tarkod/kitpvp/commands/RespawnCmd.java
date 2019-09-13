@@ -5,7 +5,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.tarkod.kitpvp.KitPvP;
-import fr.tarkod.kitpvp.timer.RespawnTimer;
+import fr.tarkod.kitpvp.utils.timer.RespawnTimer;
 
 public class RespawnCmd extends Command {
 

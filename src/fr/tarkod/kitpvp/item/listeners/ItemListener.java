@@ -31,9 +31,11 @@ public class ItemListener implements Listener {
         if(itemStack == null){
             return;
         }
-        ItemSpecificity itemSpecificity = main.getDataManager().getItemSpecificityManager().getItemSpecificity(itemStack);
-        if(!itemSpecificity.isLootWhenDrop()) {
-            e.setCancelled(true);
+        if(main.getDataManager().getItemSpecificityManager().hasItemSpecificity(itemStack)) {
+            ItemSpecificity itemSpecificity = main.getDataManager().getItemSpecificityManager().getItemSpecificity(itemStack);
+            if (!itemSpecificity.isLootWhenDrop()) {
+                e.setCancelled(true);
+            }
         }
     }
 
