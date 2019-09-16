@@ -45,6 +45,8 @@ public class EventManager {
                 new EventSoulPotion("Potion d'âme", "Chaque kill vous donnera un niveau d'un effet de potion aléatoire !", Material.POTION, 5*60, main),
                 new EventDoubleAll("Double tout", "Tout est doublé !", Material.BLAZE_POWDER, 2*60, main)
         ));
+
+        events.forEach(event -> main.getServer().getPluginManager().registerEvents(event, main));
     }
 
     public List<Event> getRegisteredEvents() {
@@ -73,7 +75,6 @@ public class EventManager {
 
         // load event
         eventLaunched = event;
-        main.getServer().getPluginManager().registerEvents(event, main);
 
         // load event runnable
         loadRunnable();
@@ -112,7 +113,6 @@ public class EventManager {
             bukkitRunnable.cancel();
 
             // unload event
-            HandlerList.unregisterAll(eventLaunched);
             eventLaunched = null;
         }
     }
