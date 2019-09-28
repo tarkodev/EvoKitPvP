@@ -32,7 +32,7 @@ public class EventSoulPotion extends Event {
 
     @EventHandler
     public void onDeathByPlayer(EGPlayerDeathByEntityEvent event) {
-        if (!(event.getKiller() instanceof Player)) return;
+        if (!isEnable() || !(event.getKiller() instanceof Player)) return;
 
         Player victim = event.getVictim();
         UUID victimUUID = victim.getUniqueId();
@@ -59,6 +59,8 @@ public class EventSoulPotion extends Event {
 
     @EventHandler
     public void onRespawn(EGPlayerRespawnEvent event) {
+        if (!isEnable()) return;
+
         Player player = event.getPlayer();
 
         playersEffects.get(player.getUniqueId()).setEffectsOnPlayer(player);
@@ -66,6 +68,8 @@ public class EventSoulPotion extends Event {
 
     @EventHandler
     public void onItemConsume(PlayerItemConsumeEvent event) {
+        if (!isEnable()) return;
+
         Player player = event.getPlayer();
         ItemStack itemConsumed = event.getItem();
 

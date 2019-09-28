@@ -14,6 +14,10 @@ public abstract class Event implements Listener {
     private String description;
     private Material material;
 
+    // don't forget to take care of this
+    private boolean isEnable;
+
+    // Need update
     private int maxTime;
 
     abstract public void everySecond();
@@ -35,11 +39,14 @@ public abstract class Event implements Listener {
         );
 
         onEnable();
+        isEnable = true;
     }
 
     public void stop() {
         Bukkit.broadcastMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.AQUA + "L'event " + name + " est terminé");
+
         onDisable();
+        isEnable = false;
     }
 
     public KitPvP getMain(){
@@ -64,5 +71,9 @@ public abstract class Event implements Listener {
 
     public Material getMaterial() {
         return material;
+    }
+
+    public boolean isEnable() {
+        return isEnable;
     }
 }

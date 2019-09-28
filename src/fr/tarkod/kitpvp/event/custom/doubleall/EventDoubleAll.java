@@ -25,6 +25,8 @@ public class EventDoubleAll extends Event {
 
     @EventHandler
     public void doubleHit(EntityDamageByEntityEvent event) {
+        if (!isEnable()) return;
+
         event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 2);
     }
 
@@ -44,6 +46,7 @@ public class EventDoubleAll extends Event {
 
     @EventHandler
     public void onRespawn(EGPlayerRespawnEvent event) {
+        if (!isEnable()) return;
         doublePlayerStats(event.getPlayer());
     }
 
@@ -51,6 +54,8 @@ public class EventDoubleAll extends Event {
 
     @EventHandler
     public void doubleJumpDetection(PlayerToggleFlightEvent event) {
+        if (!isEnable()) return;
+
         // To test in real condition to get a perfect jump sensation
         Player player = event.getPlayer();
 
@@ -68,6 +73,8 @@ public class EventDoubleAll extends Event {
 
     @EventHandler
     public void onItemConsume(PlayerItemConsumeEvent event) {
+        if (!isEnable()) return;
+
         Player player = event.getPlayer();
         ItemStack itemConsumed = event.getItem();
 
@@ -96,6 +103,8 @@ public class EventDoubleAll extends Event {
 
     @EventHandler
     public void splashPotion(PotionSplashEvent event) {
+        if (!isEnable()) return;
+
         Collection<PotionEffect> effects = event.getPotion().getEffects();
 
         event.getAffectedEntities().forEach(entity -> {
@@ -107,6 +116,8 @@ public class EventDoubleAll extends Event {
 
     @EventHandler
     public void hitTheGround(PlayerMoveEvent event) {
+        if (!isEnable()) return;
+
         Player player = event.getPlayer();
         Location playerLoc = player.getLocation();
 
@@ -119,11 +130,13 @@ public class EventDoubleAll extends Event {
 
     @EventHandler
     public void onDisconnect(PlayerQuitEvent event) {
+        if (!isEnable()) return;
         resetPlayerStats(event.getPlayer());
     }
 
     @EventHandler
     public void onConnect(PlayerJoinEvent event) {
+        if (!isEnable()) return;
         doublePlayerStats(event.getPlayer());
     }
 
