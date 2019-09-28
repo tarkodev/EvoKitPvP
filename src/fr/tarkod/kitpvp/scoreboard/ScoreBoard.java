@@ -1,5 +1,6 @@
 package fr.tarkod.kitpvp.scoreboard;
 
+import fr.tarkod.kitpvp.KitPvP;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
@@ -33,7 +34,7 @@ public class ScoreBoard {
 			ss.setLine(6, c + "Ratio K/D: " + ChatColor.WHITE + profile.getKD());
 			//ss.setLine(6, "§2");
 			//ss.setLine(7, ChatColor.GOLD + "" + ChatColor.BOLD + "Niveau");
-			ss.setLine(7, c + "Level: " + ChatColor.WHITE + profile.getLevel() + " (" + (int) profile.getExperience() + "/" + (int) profile.getLevelManager().howXpToLevelUp(profile.getLevel()) + ")");
+			ss.setLine(7, c + "Level: " + ChatColor.WHITE + profile.getLevel() + " (" + (int) KitPvP.getInstance().getLevelManager().getProfileLevel(profile).getXp() + "/" + (int) KitPvP.getInstance().getLevelManager().getProfileLevel(profile).howXpToLevelUp() + ")");
 			ss.setLine(8, c + "Prestige: " + ChatColor.WHITE + profile.getPrestige());
 			//ss.setLine(8, c + "PrestigeCoins: " + ChatColor.WHITE + profile.getPrestigeCoins());
 			//ss.setLine(8, ChatColor.GREEN + "Expérience: " + ChatColor.WHITE + profile.getExperience());

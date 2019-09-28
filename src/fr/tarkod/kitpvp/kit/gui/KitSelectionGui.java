@@ -4,32 +4,25 @@ import fr.tarkod.kitpvp.KitPvP;
 import fr.tarkod.kitpvp.kit.KitManager;
 import fr.tarkod.kitpvp.kit.kit.Kit;
 import fr.tarkod.kitpvp.profile.Profile;
-import fr.tarkod.kitpvp.utils.EvoInventory.EvoInvItem;
-import fr.tarkod.kitpvp.utils.EvoInventory.EvoInventory;
+import fr.tarkod.kitpvp.utils.HuntiesInventory.HuntiesInventory;
 import fr.tarkod.kitpvp.utils.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
-public class KitSelectionGui {
+public class KitSelectionGui extends HuntiesInventory {
 
-    private EvoInventory inventory;
     private KitPvP main;
+
     private Profile profile;
 
     public KitSelectionGui(Profile profile, KitPvP main) {
+        super(9*3, "Sélection des kits", main);
         this.profile = profile;
         this.main = main;
 
-        inventory = new EvoInventory("Sélection des kits", 9 * 3, main);
-
         load();
-    }
-
-    public void open() {
-        load();
-        profile.getPlayer().openInventory(inventory.getInventory());
     }
 
     public void load() {
@@ -43,7 +36,7 @@ public class KitSelectionGui {
             } else {
                 itemStack = itemUnlocked(kit);
             }
-            inventory.setItem(kit.getSlot(), new EvoInvItem(itemStack, event -> {
+            setItem(kit.getSlot(), itemStack, event -> {
                 if (event.getClick() == ClickType.LEFT) {
                     if (kitManager.isLock(kit, profile)) {
                         kitManager.unlock(kit, profile);
@@ -54,16 +47,23 @@ public class KitSelectionGui {
                     kitManager.openKitViewerGui(kit, profile);
                 }
                 load();
-            }));
+            });
         }
     }
 
     private ItemStack itemUnlocked(Kit kit) {
         ItemBuilder item = new ItemBuilder(kit.getMaterial())
-                .setName(ChatColor.GREEN + kit.getName())
-                .addLoreLine(ChatColor.GRAY + kit.getDescription());
+                .setName(ChatColor.GREEN + kit.getName());
+
+        item.addLoreLine(ChatColor.GRAY + kit.getDescription());
+
+        item.addLoreLine(ChatColor.DARK_GRAY + "♦ Clique gauche pour s'équiper le kit");
+        item.addLoreLine(ChatColor.DARK_GRAY + "♦ Clique droit pour prévisualiser le kit");
+
+        item.addLoreLine(" ");
+
         if (kit.getMoneyCost() >= 0) {
-            item.addLoreLine(ChatColor.GREEN + "Débloqué !");
+            item.addLoreLine(ChatColor.GREEN + "Tu possède ce kit !");
         }
         if (!profile.getCooldownManager().canGet(kit.getName())) {
             item.addLoreLine(ChatColor.RED + "Tu peux réutiliser ce kit dans " + profile.getCooldownManager().getTimeLeft(kit.getName()) + "s");
@@ -73,20 +73,22 @@ public class KitSelectionGui {
 
     private ItemStack itemLocked(Kit kit) {
         ItemBuilder item = new ItemBuilder(kit.getMaterial())
-                .setName(ChatColor.RED + kit.getName())
-                .addLoreLine(ChatColor.GRAY + kit.getDescription());
+                .setName(ChatColor.RED + kit.getName());
 
-        /*if(kit.getSkill() != null) {
-            for(String str : kit.getSkill().keySet()) {
-                item.addLoreLine(ChatColor.AQUA + str + ":", ChatColor.AQUA + "- " + kit.getSkill().get(str));
-            }
-        }*/
+        item.addLoreLine(ChatColor.GRAY + kit.getDescription());
+
+        item.addLoreLine(ChatColor.DARK_GRAY + "♦ Clique gauche pour s'équiper le kit");
+        item.addLoreLine(ChatColor.DARK_GRAY + "♦ Clique droit pour prévisualiser le kit");
+
+
+
+        item.addLoreLine(" ");
 
         if (kit.getMoneyCost() >= 0) {
-            item.addLoreLine(ChatColor.RED + "Bloqué" + " " + kit.getMoneyCost() + "$");
+            item.addLoreLine(ChatColor.RED + "Tu ne possède pas ce kit, il coûte " + kit.getMoneyCost() + "$");
         }
         if (kit.getLevelCost() > 0) {
-            item.addLoreLine(ChatColor.RED + "Il faut être niveau " + kit.getLevelCost() + " !");
+            item.addLoreLine(ChatColor.RED + "et il faut être niveau " + kit.getLevelCost() + " !");
         }
         return item.toItemStack();
     }

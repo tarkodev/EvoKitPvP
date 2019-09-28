@@ -8,10 +8,11 @@ import fr.tarkod.kitpvp.block.BlockManager;
 import fr.tarkod.kitpvp.block.command.BypassCommand;
 import fr.tarkod.kitpvp.combat.FightManager;
 import fr.tarkod.kitpvp.commands.*;
-import fr.tarkod.kitpvp.commands.bungee.BoutiqueCommand;
-import fr.tarkod.kitpvp.commands.bungee.DiscordCommand;
-import fr.tarkod.kitpvp.commands.bungee.TeamSpeakCommand;
-import fr.tarkod.kitpvp.commands.bungee.TwitterCommand;
+import fr.tarkod.kitpvp.level.LevelManager;
+import fr.tarkod.kitpvp.useless.bungee.BoutiqueCommand;
+import fr.tarkod.kitpvp.useless.bungee.DiscordCommand;
+import fr.tarkod.kitpvp.useless.bungee.TeamSpeakCommand;
+import fr.tarkod.kitpvp.useless.bungee.TwitterCommand;
 import fr.tarkod.kitpvp.commands.remove.RemoveCommand;
 import fr.tarkod.kitpvp.commands.useless.UuidCommand;
 import fr.tarkod.kitpvp.event.EventManager;
@@ -22,7 +23,7 @@ import fr.tarkod.kitpvp.item.listeners.ItemListener;
 import fr.tarkod.kitpvp.kit.commands.KitEditorCommand;
 import fr.tarkod.kitpvp.listeners.custom.EntityDamageByEntity;
 import fr.tarkod.kitpvp.loot.commands.LootCmd;
-import fr.tarkod.kitpvp.kit.chest.KitChest;
+import fr.tarkod.kitpvp.kit.chestselector.KitChest;
 import fr.tarkod.kitpvp.kit.commands.KitCommand;
 import fr.tarkod.kitpvp.listeners.*;
 import fr.tarkod.kitpvp.listeners.paytowin.KillAdvantage;
@@ -58,6 +59,8 @@ public class KitPvP extends JavaPlugin {
 	private EventManager eventManager;
 	private BlockManager blockManager;
 	private FightManager fightManager;
+	private LevelManager levelManager;
+
 
 	private ItemLibrary itemLibrary;
 	//private Map<UUID, ScoreboardSign> boards = new HashMap<UUID, ScoreboardSign>();
@@ -90,6 +93,7 @@ public class KitPvP extends JavaPlugin {
 		fightManager = new FightManager(this);
 		dataManager = new DataManager(gson, getDataFolder(), this);
 		itemLibrary = new ItemLibrary(this);
+		this.levelManager = new LevelManager(10, 1.02);
 		loadListeners();
 		registerCommands();
 	}
@@ -203,5 +207,9 @@ public class KitPvP extends JavaPlugin {
 
 	public ItemLibrary getItemLibrary() {
 		return itemLibrary;
+	}
+
+	public LevelManager getLevelManager() {
+		return levelManager;
 	}
 }

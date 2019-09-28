@@ -22,14 +22,14 @@ public class PlayerListener implements Listener {
 	}
 
 	@EventHandler
-	public void onPlayerJoin(PlayerJoinEvent e){
+	public void onPlayerJoin(PlayerJoinEvent e) {
 	    Player player = e.getPlayer();
 	    Profile profile = main.getDataManager().getProfileManager().get(player.getUniqueId());
 	    profile.setName(player.getName());
     }
 
     @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent e){
+    public void onPlayerQuit(PlayerQuitEvent e) {
         Player player = e.getPlayer();
         Profile profile = main.getDataManager().getProfileManager().get(player.getUniqueId());
         profile.destroy();

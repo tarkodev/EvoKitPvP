@@ -10,6 +10,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
+
 public class ItemRarityCommand extends Command {
 
     private KitPvP main;
@@ -48,8 +50,8 @@ public class ItemRarityCommand extends Command {
                         player.setItemInHand(result);
                         player.sendMessage(ChatColor.GREEN + "Rareté enlevé !");
                         break;
-                    case "test":
-                        itemRarityManager.add(new ItemRarity("DEFAULTID"));
+                    case "default":
+                        Arrays.asList("KIT", "COMMON", "RARE", "EPIC", "LEGENDARY").forEach(s -> itemRarityManager.add(new ItemRarity(s)));
                         break;
                     default:break;
                 }

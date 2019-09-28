@@ -86,7 +86,6 @@ public class EntityDamageByEntity implements Listener {
 				killerProfile.setExperience(killerProfile.getExperience() + event.getDroppedExperience());
 			}
 
-			killerProfile.getLevelManager().update();
 			killer.playSound(killer.getLocation(), Sound.ORB_PICKUP, 2, 2);
 
 			killer.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 4 * 20, 0));

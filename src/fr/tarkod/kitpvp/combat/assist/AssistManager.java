@@ -1,10 +1,8 @@
 package fr.tarkod.kitpvp.combat.assist;
 
 import fr.tarkod.kitpvp.KitPvP;
-import fr.tarkod.kitpvp.listeners.custom.EGPlayerDeathByEntityEvent;
-import fr.tarkod.kitpvp.listeners.custom.EGPlayerDeathEvent;
 import fr.tarkod.kitpvp.profile.Profile;
-import fr.tarkod.kitpvp.profile.serialization.ProfileManager;
+import fr.tarkod.kitpvp.profile.ProfileManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

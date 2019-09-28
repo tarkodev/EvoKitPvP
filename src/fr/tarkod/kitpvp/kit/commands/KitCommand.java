@@ -76,7 +76,7 @@ public class KitCommand extends Command {
                     Kit kit = kitManager.getKitByName(c);
                     Profile profile = main.getDataManager().getProfileManager().get(victim.getUniqueId());
 
-                    switch (a) {
+                    switch (a.toLowerCase()) {
                         case "refund":
                             kitManager.refund(kit, profile);
                             break;

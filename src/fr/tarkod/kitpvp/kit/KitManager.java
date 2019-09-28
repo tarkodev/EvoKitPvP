@@ -70,11 +70,11 @@ public class KitManager {
     }
 
     public void openSelectionGui(Profile profile) {
-        new KitSelectionGui(profile, main).open();
+        new KitSelectionGui(profile, main).open(profile.getPlayer());
     }
 
     public void openConfirmGui(Kit kit, Profile profile) {
-        new KitConfirmGui(kit, profile, main).open();
+        new KitConfirmGui(kit, profile, main).open(profile.getPlayer());
     }
 
     public void openKitViewerGui(Kit kit, Profile profile) {
@@ -86,8 +86,11 @@ public class KitManager {
     }
 
     public void refund(Kit kit, Profile profile) {
-        profile.setMoney(profile.getMoney() + kit.getMoneyCost());
-        remove(kit, profile);
+        if(profile.getUnlockedKit().contains(kit.getName())) {
+            profile.sendMessage(ChatColor.WHITE + "Ton kit " + ChatColor.AQUA + kit.getName() + ChatColor.WHITE + " a été remboursé !" + ChatColor.GREEN + " +" + kit.getMoneyCost() + "$");
+            profile.setMoney(profile.getMoney() + kit.getMoneyCost());
+            remove(kit, profile);
+        }
     }
 
     public void unlock(Kit kit, Profile profile) {

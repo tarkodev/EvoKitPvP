@@ -30,11 +30,11 @@ public class KitEditorCommand extends Command {
             Profile profile = main.getDataManager().getProfileManager().get(player.getUniqueId());
             KitManager kitManager = main.getDataManager().getKitManager();
 
-            if(player.isOp()) return false;
+            if(!player.isOp()) return false;
 
             if (args.length == 1) {
                 String a = args[0];
-                switch (a) {
+                switch (a.toLowerCase()) {
                     case "list":
                         kitManager.getKits().forEach(kit -> {
                             player.sendMessage(ChatColor.GOLD + "-----------------------");
@@ -60,7 +60,7 @@ public class KitEditorCommand extends Command {
             if (args.length == 2) {
                 String a = args[0];
                 String b = args[1];
-                switch (a) {
+                switch (a.toLowerCase()) {
                     case "create":
                         kitManager.registerKit(new Kit(b));
                         player.sendMessage("Kit Added");

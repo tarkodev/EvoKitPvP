@@ -5,7 +5,7 @@ import fr.tarkod.kitpvp.item.itemrarity.ItemRarityManager;
 import fr.tarkod.kitpvp.item.itemspecificity.ItemSpecificityManager;
 import fr.tarkod.kitpvp.loot.LootManager;
 import fr.tarkod.kitpvp.kit.KitManager;
-import fr.tarkod.kitpvp.profile.serialization.ProfileManager;
+import fr.tarkod.kitpvp.profile.ProfileManager;
 
 import java.io.File;
 

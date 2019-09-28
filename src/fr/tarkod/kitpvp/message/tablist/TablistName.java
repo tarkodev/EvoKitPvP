@@ -34,7 +34,7 @@ public class TablistName implements Listener {
     }
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent event){
+    public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         PermissionGroup permissionGroup = PermissionsEx.getPermissionManager().getGroupList().stream()
                 .filter(permissionGroups -> permissionGroups.getActiveUsers()

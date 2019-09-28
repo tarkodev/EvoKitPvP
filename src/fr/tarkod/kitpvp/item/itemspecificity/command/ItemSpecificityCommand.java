@@ -1,14 +1,12 @@
 package fr.tarkod.kitpvp.item.itemspecificity.command;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import fr.tarkod.kitpvp.KitPvP;
 import fr.tarkod.kitpvp.item.itemrarity.ItemRarity;
 import fr.tarkod.kitpvp.item.itemrarity.ItemRarityManager;
 import fr.tarkod.kitpvp.item.itemspecificity.ItemSpecificity;
 import fr.tarkod.kitpvp.item.itemspecificity.ItemSpecificityBase;
 import fr.tarkod.kitpvp.item.itemspecificity.ItemSpecificityManager;
-import fr.tarkod.kitpvp.utils.EvoInventory.EvoInvItem;
-import fr.tarkod.kitpvp.utils.EvoInventory.EvoInventory;
+import fr.tarkod.kitpvp.utils.HuntiesInventory.HuntiesInventory;
 import fr.tarkod.kitpvp.utils.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -39,18 +37,27 @@ public class ItemSpecificityCommand extends Command {
             }
 
             if(args.length == 0){
-                EvoInventory evoInventory = new EvoInventory("Personnalisation ", 9, main);
-                evoInventory.setItem(0, new EvoInvItem(new ItemBuilder(Material.BLAZE_POWDER).setName("lootOnDeath").toItemStack(), event -> {
-                    player.setItemInHand(itemSpecificityManager.setItemSpecificity(player.getItemInHand(), itemSpecificity -> itemSpecificity.setLootOnDeath(!itemSpecificity.isLootOnDeath())));
-                }));
-                evoInventory.setItem(1, new EvoInvItem(new ItemBuilder(Material.BEDROCK).setName("lootWhenDrop").toItemStack(), event -> {
-                    player.setItemInHand(itemSpecificityManager.setItemSpecificity(player.getItemInHand(), itemSpecificity -> itemSpecificity.setLootWhenDrop(!itemSpecificity.isLootWhenDrop())));
-                }));
-                player.openInventory(evoInventory.getInventory());
+                class ItemSpecifityGui extends HuntiesInventory {
+
+                    public ItemSpecifityGui(){
+                        super(9, "Personnalisation", main);
+                    }
+
+                    @Override
+                    public void load() {
+                        setItem(0, new ItemBuilder(Material.BLAZE_POWDER).setName("lootOnDeath").toItemStack(), event -> {
+                            player.setItemInHand(itemSpecificityManager.setItemSpecificity(player.getItemInHand(), itemSpecificity -> itemSpecificity.setLootOnDeath(!itemSpecificity.isLootOnDeath())));
+                        });
+                        setItem(1, new ItemBuilder(Material.BEDROCK).setName("lootWhenDrop").toItemStack(), event -> {
+                            player.setItemInHand(itemSpecificityManager.setItemSpecificity(player.getItemInHand(), itemSpecificity -> itemSpecificity.setLootWhenDrop(!itemSpecificity.isLootWhenDrop())));
+                        });
+                    }
+                }
+                new ItemSpecifityGui().open(player);
             }
             if(args.length == 1){
                 String a = args[0];
-                switch (a){
+                switch (a.toLowerCase()){
                     case "lootOnDeath":
                         ItemStack itemStack = player.getItemInHand();
                         ItemStack result = itemSpecificityManager.setItemSpecificity(itemStack, itemSpecificity -> {
@@ -81,7 +88,7 @@ public class ItemSpecificityCommand extends Command {
             if(args.length == 2){
                 String a = args[0];
                 String b = args[1];
-                switch (a){
+                switch (a.toLowerCase()){
                     case "set":
                         ItemStack itemStack = player.getItemInHand();
                         if(itemRarityManager.getByID(b) != null) {

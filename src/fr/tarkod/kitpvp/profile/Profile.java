@@ -44,7 +44,6 @@ public class Profile {
 	private transient KitPvP main;
 
 	private transient ScoreboardSign ss;
-	private transient LevelManager lm;
 
 	public Profile(UUID uuid, KitPvP main) {
 		this.kill = 0;
@@ -58,6 +57,10 @@ public class Profile {
 		this.uuid = uuid;
 		this.unlockedKit = Arrays.asList("Guerrier");
 		defaultLoad(main);
+	}
+
+	public void sendMessage(String string) {
+		getPlayer().sendMessage(string);
 	}
 
 	public void defaultLoad(KitPvP main) {
@@ -86,8 +89,6 @@ public class Profile {
 		}
 		atmManager.defaultLoad(this);
 
-		LevelManager lm = new LevelManager(this, KitPvP.getInstance());
-		this.lm = lm;
 		if(scoreBoard) {
 			ss = ScoreBoard.createScoreboard(this);
 			updateScoreBoard();
@@ -148,7 +149,6 @@ public class Profile {
 
 	public void setExperience(double experience) {
 		this.experience = experience;
-		lm.update();
 		updateScoreBoard();
 	}
 
@@ -205,14 +205,13 @@ public class Profile {
 	
 	public void setLevel(int level) {
 		this.level = level;
-		lm.update();
 		updateScoreBoard();
 	}
 
 	public String getLevelPrefix(){
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(getPrestigeManager().getPrestigeColor() + "[");
-		stringBuilder.append(getLevelManager().getLevelColor() + "" + getLevel());
+		stringBuilder.append(/*getLevelManager().getLevelColor() +*/ "" + getLevel());
 		stringBuilder.append(getPrestigeManager().getPrestigeColor() + "]");
 		return stringBuilder.toString();
 	}
@@ -224,10 +223,6 @@ public class Profile {
 
 	public UUID getUniqueID(){
 		return uuid;
-	}
-
-	public LevelManager getLevelManager() {
-		return lm;
 	}
 
 	public ProfileSettings getSettings() {
